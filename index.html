@@ -105,6 +105,24 @@ canvas.pad{width:100%;height:170px;display:block;background:#fbf7ec repeating-li
 #app.wide .scene{font-size:26px}
 .side .rules{margin:0}
 @media(max-width:900px){#app.wide{padding:10px}#app.wide .grid2{grid-template-columns:1fr}#app.wide .side{position:static}#app.wide canvas.pad{height:200px}}
+@media(min-width:901px){
+#app.fit{height:100dvh;overflow:hidden;display:flex;flex-direction:column;padding:10px 20px}
+#app.fit .hud{flex:none;margin-bottom:8px}
+#app.fit .booth{flex:0 0 clamp(120px,21vh,230px);height:auto;margin-bottom:8px}
+#app.fit .booth canvas.pt{left:0;right:0;margin:0 auto;height:calc(100% - 30px);width:auto}
+#app.fit .desktop{flex:1;min-height:0;margin:0;padding:10px;display:flex}
+#app.fit .grid2{flex:1;min-height:0;align-items:stretch;grid-template-rows:minmax(0,1fr)}
+#app.fit .main{display:flex;flex-direction:column;min-height:0;gap:8px}
+#app.fit .main .paper{flex:1 1 auto;min-height:0;overflow:auto;margin:0}
+#app.fit #act,#app.fit #wact{flex:none;margin:0}
+#app.fit #rej,#app.fit #verdict{flex:0 1 auto;max-height:58%;overflow:auto}
+#app.fit #verdict .card{margin:0}#app.fit #verdict button{position:sticky;bottom:0}
+#app.fit .scene{font-size:clamp(18px,2.5vh,26px)}
+#app.fit .side{position:static;min-height:0;height:100%}
+#app.fit .side .rules{flex:0 1 auto;max-height:38%;overflow:auto}
+#app.fit .side .padwrap{flex:1;min-height:0;display:flex;flex-direction:column}
+#app.fit .side canvas.pad{flex:1;min-height:0;height:auto}
+}
 </style>
 </head>
 <body>
@@ -531,7 +549,8 @@ const $ = s=>document.querySelector(s);
 const f = n => Number.isInteger(n)?n.toLocaleString('en-US'):(Math.round(n*100)/100).toLocaleString('en-US');
 
 /* ============ VISTAS ============ */
-const W=on=>{ const a=document.getElementById('app'); if(a) a.classList.toggle('wide',on); };
+const W=on=>{ const a=document.getElementById('app'); if(a){ a.classList.toggle('wide',on); a.classList.remove('fit'); } };
+const FIT=()=>{ const a=document.getElementById('app'); if(a) a.classList.add('fit'); };
 function home(){
   W(false);
   S.case=null; clearInterval(CK);
@@ -894,7 +913,7 @@ function deskCase(){
    <details class="tech"><summary>Technical brief (exam wording)</summary>${q.question}</details>
    ${mc?`<div class="mu">YOUR RULING</div>${mcHtml(c)}`:`<div class="mu">${q.type==='multientry'?'ENTRY POSTED BY THEIR BOOKKEEPER':q.type==='choice'?'THEIR POSITION':'THEIR PROPOSAL'}</div>${claim}`}</div>
   <p id="act">${mc?'<button class="appr" onclick="signMC()">✔ SIGN OFF ON SELECTED</button>':'<button class="appr" onclick="approve()">✔ APPROVE</button> <button class="rej" onclick="openReject()">✘ REJECT</button>'}</p><div id="rej"></div><div id="verdict"></div></div><div class="side">${rulesHtml()}${padHtml()}</div></div></div>`;
-  drawPortraits(); sfx('bell'); initPad();
+  drawPortraits(); sfx('bell'); initPad(); FIT(); padSize();
   clearInterval(CK); CK=setInterval(tick,1000); tick();
 }
 function tick(){ const el=$('#clk'); if(!el||!D) return; const s=Math.floor((Date.now()-D.t0)/1000); el.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); el.style.color=s>180?'#f87171':''; }
@@ -933,7 +952,7 @@ function settle(good,msg,act){
   if(q.type==='multientry'&&c.mode!=='mc'&&!c.ok) document.querySelectorAll('.fl')[c.mut].classList.add('bad');
   $('.paper').insertAdjacentHTML('beforeend',`<div class="bigstamp ${act==='R'?'r':'a'}">${act==='A'?'APPROVED':act==='R'?'REJECTED':'SIGNED'}</div>`);
   sfx('stamp'); setTimeout(()=>sfx(good?'ok':'bad'),200); const pt=$('#pt'); if(pt) pt.classList.add('leave');
-  document.querySelectorAll('#act button').forEach(b=>b.disabled=true); $('#rej').innerHTML='';
+  document.querySelectorAll('#act button').forEach(b=>b.disabled=true); if(document.getElementById('app').classList.contains('fit')) $('#act').style.display='none'; $('#rej').innerHTML='';
   $('#verdict').innerHTML=`<div class="card"><span class="stamp ${good?'ok':'ko'}">${label}</span><p class="quote">“${react}” <span class="mu">— ${c.client}</span></p><p>${msg}</p><p><b>Correct:</b> ${correctText(c)}</p><p class="mu">${q.explain} · ${q.ref}</p><button onclick="D.i++;deskCase()">Next client →</button></div>`;
   $('#verdict').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
@@ -1079,7 +1098,7 @@ function workCase(){
   <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${t.client}"></canvas><div class="counter"><div class="plate">${t.client.toUpperCase()}</div></div></div>
   <div class="desktop"><div class="grid2"><div class="main"><div class="paper"><div class="mu">${t.client.toUpperCase()} · ${t.role.toUpperCase()}</div><p class="scene">“${t.text}”</p>${WT[t.kind].ui(t)}</div>
   <p id="wact"><button class="appr" onclick="workSubmit()">✔ FILE IT</button></p><div id="verdict"></div></div><div class="side">${rulesHtml()}${padHtml()}</div></div></div>`;
-  drawPortraits(); sfx('bell'); initPad(); clearInterval(CK); CK=setInterval(tick,1000); tick();
+  drawPortraits(); sfx('bell'); initPad(); FIT(); padSize(); clearInterval(CK); CK=setInterval(tick,1000); tick();
 }
 function workSubmit(){
   if(D.dec) return; const t=D.q[D.i], r=WT[t.kind].grade(t);
@@ -1089,7 +1108,7 @@ function workSubmit(){
   else { D.miss.push(t); if(D.warn>0){ D.warn--; label='WARNING (free)'; } else { D.cash-=75; label='CITATION −€75'; } }
   $('#cash').textContent='€'+D.cash; $('#warn').textContent='WARN '+'■'.repeat(D.warn)+'□'.repeat(2-D.warn);
   sfx('stamp'); setTimeout(()=>sfx(r.ok?'ok':'bad'),200); const pt=$('#pt'); if(pt) pt.classList.add('leave');
-  document.querySelectorAll('#wact button').forEach(b=>b.disabled=true);
+  document.querySelectorAll('#wact button').forEach(b=>b.disabled=true); if(document.getElementById('app').classList.contains('fit')) $('#wact').style.display='none';
   const react=r.ok?'The books are clean. Thank you.':'That will not match our records. We need to redo it.';
   $('#verdict').innerHTML=`<div class="card"><span class="stamp ${r.ok?'ok':'ko'}">${label}</span><p class="quote">“${react}” <span class="mu">— ${t.client}</span></p>${r.ok?'':`<p><b>Correct:</b></p>${WT[t.kind].ans(t)}`}<p class="mu">${t.why} · ${t.ref}</p><button onclick="D.i++;workCase()">Next job →</button></div>`;
   $('#verdict').scrollIntoView({behavior:'smooth',block:'nearest'});
