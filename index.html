@@ -87,6 +87,7 @@ canvas.pt{image-rendering:crisp-edges;image-rendering:pixelated;width:128px;heig
 table{font-size:20px}
 .scene{font-size:23px;line-height:1.15}.say{font-size:24px;background:#efe8cc;border-left:6px solid #a8352b;padding:8px 10px;margin:4px 0 8px}details.tech{margin:8px 0;font-size:18px;border:2px dashed #8a7f5c;padding:4px 8px}details.tech summary{cursor:pointer;font-size:10px;font-family:'Press Start 2P',monospace}.quote{font-size:23px;border-left:6px solid var(--ac);padding-left:10px}
 .paper .opt{background:#efe8cc;color:#2a2622;font-size:20px}table.mini{width:100%;font-size:17px;margin:2px 0}table.tb{width:100%;margin:6px 0}table.tb td,table.tb th{padding:3px 6px}
+.opt.good{outline:4px solid #3a8f3a}.opt.badc{outline:4px solid #a8352b}
 </style>
 </head>
 <body>
@@ -379,8 +380,8 @@ const QBANK = [
  explain:'Two months are earned: 9,000 × 2/6 = 3,000. Unearned revenue stays too high and revenue too low.'},
 {subj:A,type:'multientry',concept:'Closing entries',ref:'Weygandt Ch.4',
  question:'At Dec 31, 2026 Solis Co. reports Service Revenue €85,000, Salaries Expense €40,000, Rent Expense €15,000 and Dividends €8,000. Prepare all closing entries (use the Income Summary account).',
- lines:[{a:'Service Revenue',s:'D',v:85000},{a:'Income Summary',s:'C',v:85000},{a:'Income Summary',s:'D',v:85000},{a:'Salaries Expense',s:'C',v:40000},{a:'Rent Expense',s:'C',v:15000},{a:'Retained Earnings',s:'C',v:30000},{a:'Retained Earnings',s:'D',v:8000},{a:'Dividends',s:'C',v:8000}],
- explain:'1) Revenue → Income Summary (85,000). 2) Expenses → Income Summary (55,000). 3) Income Summary balance 30,000 → Retained Earnings. 4) Dividends → Retained Earnings. Debits to Income Summary add up to 55,000 + 30,000 = 85,000 (separate lines are fine).'},
+ lines:[{a:'Service Revenue',s:'D',v:85000},{a:'Income Summary',s:'C',v:85000},{a:'Income Summary',s:'D',v:55000},{a:'Salaries Expense',s:'C',v:40000},{a:'Rent Expense',s:'C',v:15000},{a:'Income Summary',s:'D',v:30000},{a:'Retained Earnings',s:'C',v:30000},{a:'Retained Earnings',s:'D',v:8000},{a:'Dividends',s:'C',v:8000}],
+ explain:'1) Revenue → Income Summary (85,000). 2) Expenses → Income Summary (55,000). 3) Income Summary balance 30,000 → Retained Earnings. 4) Dividends → Retained Earnings.'},
 {subj:A,type:'choice',concept:'Post-closing trial balance',ref:'Weygandt Ch.4',answer:2,
  question:'Which account appears on a post-closing trial balance?',
  options:['Service Revenue','Dividends','Accumulated Depreciation—Equipment','Income Summary'],
@@ -796,7 +797,7 @@ const fmtV=(q,v)=>(q.unit==='$'||q.unit==='€')?q.unit+f(v):f(v)+(q.unit?' '+q.
 
 function careerHome(){
   const d=store.get(); d.career=d.career||{};
-  let h=`<h2>Career mode · Consultant Desk</h2>`;
+  let h=`<h2>Career mode · Consultant Desk</h2><div class="card"><h3>Free mode</h3><div class="mu">Choose the chapters yourself and serve clients from them, in any order.</div><div style="margin-top:8px"><button onclick="freeSetup()">Pick chapters</button></div></div>`;
   TRACKS.forEach(t=>{ const lock=t.needs&&!d.career[t.needs], un=d.career[t.key]||1, st=t.kind==='work'?'workStart':'deskStart';
     const sub=t.desc||'Review client work and decide: approve it, reject it, or pick the right answer.';
     h+=`<div class="card"><h3>${t.name}${lock?' 🔒':''}</h3><div class="mu">${sub}${lock?' · Pass every day of the Bookkeeping Desk to be promoted.':''}</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">`+
@@ -838,6 +839,7 @@ function buildQueue(t,di){
   return shuffle([...nw,...rev]).map(mkCase);
 }
 function rulesHtml(){
+  if(D.free) return `<div class="rules"><h3 style="margin-bottom:6px">Rulebook</h3>`+D.rules.map(r=>`<details><summary>${r[0]}</summary><div style="margin-top:6px">${r[1]}</div></details>`).join('')+`</div>`;
   const R=RULES[D.t.key], ks=Object.keys(R).map(Number).sort((a,b)=>a-b), keyOf=c=>ks.filter(k=>k<=c).pop();
   const seen=new Set(D.t.days.slice(0,D.di).flatMap(x=>x.ch).map(keyOf)), cur=new Set(D.day.ch.map(keyOf));
   const vis=ks.filter(k=>seen.has(k)||cur.has(k));
@@ -857,10 +859,11 @@ function deskStart(key,di){
 
 function deskCase(){
   if(D.i>=D.q.length) return deskEnd();
+  if(D.q[D.i].kind) return workCase();
   const c=D.q[D.i], q=c.q; D.t0=Date.now(); D.dec=false; D.pick=null; D.picking=false;
   let claim=''; const mc=c.mode==='mc';
   const say=(t)=>`<div class="say">${t}</div>`;
-  if(mc){} else if(q.type==='numeric') claim=say(q.biz.say.replace('{v}','<b>'+fmtV(q,c.claim)+'</b>'));
+  if(mc){} else if(q.type==='numeric') claim=say(q.biz.say.replace('{v}','<b>'+f(c.claim)+'</b>'));
   else if(q.type==='choice') claim=say(q.biz.say.replace('{v}','<b>'+q.options[c.claim]+'</b>').replace(/“(?=<b>)/,'“'));
   else if(!mc) claim=`<table id="ft"><tr><th>Account</th><th class="n">Debit</th><th class="n">Credit</th></tr>${c.lines.map((l,i)=>`<tr class="fl" onclick="pickLine(${i})"><td style="padding-left:${l.s==='C'?28:8}px">${l.a}</td><td class="n">${l.s==='D'?f(l.v):''}</td><td class="n">${l.s==='C'?f(l.v):''}</td></tr>`).join('')}</table>`;
   $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>CASE ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
@@ -914,6 +917,7 @@ function settle(good,msg,act){
 }
 function deskEnd(){
   clearInterval(CK);
+  if(D.free) return freeEnd();
   const n=D.q.length, pct=D.ok/n, pass=pct>=0.6, avg=D.times.reduce((a,b)=>a+b,0)/n;
   const d=store.get(); d.career=d.career||{}; const un=d.career[D.t.key]||1;
   if(pass) d.career[D.t.key]=Math.min(D.t.days.length,Math.max(un,D.di+2));
@@ -945,7 +949,8 @@ function scene(c){ const [b,r]=c.q.biz.text.split('¦'); return c.mode==='mc'?(r
 function mcHtml(c){ const q=c.q; return c.opts.map((o,i)=>`<label class="opt"><input type="radio" name="mc" value="${i}"> ${q.type==='multientry'?entryTbl(o.lines):o.t}</label>`).join(''); }
 function signMC(){ if(D.dec) return; const r=document.querySelector('input[name=mc]:checked'); if(!r) return;
   const c=D.q[D.i], o=c.opts[+r.value];
-  settle(o.ok,o.ok?'Right call. The client follows your ruling.':'Wrong call. The client followed your ruling.','M'); }
+  settle(o.ok,o.ok?'Right call. The client follows your ruling.':'Wrong call. The client followed your ruling.','M');
+  document.querySelectorAll('label.opt').forEach((l,i)=>{ if(c.opts[i].ok) l.classList.add('good'); else if(i===+r.value) l.classList.add('badc'); }); }
 
 /* ===== WORK DESK: bookkeeper and senior accountant ===== */
 const WA={'Cash':'A','Accounts Receivable':'A','Supplies':'A','Prepaid Insurance':'A','Prepaid Rent':'A','Equipment':'A','Accumulated Depreciation':'XA',
@@ -1043,6 +1048,7 @@ function workStart(key,di){
 }
 function workCase(){
   if(D.i>=D.q.length) return deskEnd();
+  if(D.q[D.i].q) return deskCase();
   const t=D.q[D.i]; D.t0=Date.now(); D.dec=false;
   $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>JOB ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
   <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${t.client}"></canvas><div class="counter"><div class="plate">${t.client.toUpperCase()}</div></div></div>
@@ -1062,6 +1068,47 @@ function workSubmit(){
   const react=r.ok?'The books are clean. Thank you.':'That will not match our records. We need to redo it.';
   $('#verdict').innerHTML=`<div class="card"><span class="stamp ${r.ok?'ok':'ko'}">${label}</span><p class="quote">“${react}” <span class="mu">— ${t.client}</span></p>${r.ok?'':`<p><b>Correct:</b></p>${WT[t.kind].ans(t)}`}<p class="mu">${t.why} · ${t.ref}</p><button onclick="D.i++;workCase()">Next job →</button></div>`;
   $('#verdict').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ===== FREE MODE: pick chapters, serve clients ===== */
+const WKT={je:['Ch.2 · Journal entries (bookkeeping)',()=>mkJE([pick([...JE1,...JE2])])[0]],
+  tb:['Ch.2 · Trial balance',()=>mkTB(pick(['tb1','tb2']))],
+  adj:['Ch.3 · Adjusting entries (bookkeeping)',()=>mkJE([pick(JE3)])[0]],
+  fs:['Ch.4 · Financial statements',()=>pick([mkCLS,mkIS,mkBS])()]};
+const WKR={je:[['book',1],['book',2]],tb:[['book',3]],adj:[['fs',1]],fs:[['fs',2],['fs',3],['fs',4]]};
+function ruleKeys(sub){ return Object.keys(RULES[sub]).map(Number).sort((a,b)=>a-b); }
+function freeOpts(){
+  const ec=ruleKeys('econ'), ac=ruleKeys('acc'), cnt=(subj,sub,k)=>{ const ks=ruleKeys(sub); return QBANK.filter(q=>q.subj===subj&&ks.filter(x=>x<=chOf(q)).pop()===k).length; };
+  return {econ:ec.map(k=>({v:'econ:'+k,t:RULES.econ[k][0],n:cnt(E,'econ',k)})),
+    acc:[...ac.map(k=>({v:'acc:'+k,t:RULES.acc[k][0],n:cnt(A,'acc',k)})),...Object.keys(WKT).map(k=>({v:'wk:'+k,t:WKT[k][0],n:'∞'}))]};
+}
+function freeSetup(){
+  const d=store.get(), last=d.free||{sel:[],n:10}, o=freeOpts();
+  const col=(name,key)=>`<div class="card"><h3>${name}</h3><div style="margin-bottom:6px"><button class="sec" onclick="freeAll('${key}',true)">All</button> <button class="sec" onclick="freeAll('${key}',false)">None</button></div>${o[key].map(x=>`<label class="opt"><input type="checkbox" class="fc ${key}" value="${x.v}" ${last.sel.includes(x.v)?'checked':''}> ${x.t} <span class="mu">(${x.n})</span></label>`).join('')}</div>`;
+  $('#app').innerHTML=`<div class="row"><button class="sec" onclick="home()">← Exit</button><span class="mu">Free mode</span></div><h2>Free mode</h2><p class="mu">Pick the chapters you want to practise. Clients come in random order from those chapters only. The number in brackets is how many hand-made cases the chapter has; bookkeeping topics generate new cases every time.</p>
+   <div class="grid2">${col('Economics & Business','econ')}${col('Accounting & Financial Reporting','acc')}</div>
+   <p>Clients: <select id="fn">${[8,12,20,30].map(n=>`<option ${n===last.n?'selected':''}>${n}</option>`).join('')}</select> <button onclick="freeStart()">Open the office</button> <span id="fe" class="mu"></span></p>`;
+}
+function freeAll(k,on){ document.querySelectorAll('.fc.'+k).forEach(c=>c.checked=on); }
+function freeStart(sel,n){
+  if(!sel){ sel=[...document.querySelectorAll('.fc:checked')].map(c=>c.value); n=+$('#fn').value; }
+  if(!sel.length){ $('#fe').textContent='Select at least one chapter.'; return; }
+  const d=store.get(); d.free={sel,n}; store.set(d);
+  const pool=QBANK.filter(q=>sel.some(s=>{ const [sub,k]=s.split(':'); if(sub==='wk') return false; const ks=ruleKeys(sub); return q.subj===(sub==='econ'?E:A)&&ks.filter(x=>x<=chOf(q)).pop()===+k; }));
+  const wk=sel.filter(s=>s.startsWith('wk:')).map(s=>s.slice(3));
+  const src=[...Array(pool.length?Math.min(pool.length,4):0).fill('q'),...wk];
+  let bag=[],last=null; const nextQ=()=>{ if(!bag.length){ let t=0; do{ bag=shuffle(pool.slice()); }while(bag.length>1&&bag[bag.length-1]===last&&++t<9); } return last=bag.pop(); };
+  const q=[]; for(let i=0;i<n;i++){ const s=pick(src); q.push(s==='q'?mkCase(nextQ()):WKT[s][1]()); }
+  const rules=[], seen=new Set(); sel.forEach(s=>{ const [sub,k]=s.split(':'); const refs=sub==='wk'?WKR[k].map(([a,b])=>RULES[a][b]):[RULES[sub][k]]; refs.forEach(r=>{ if(!seen.has(r[0])){ seen.add(r[0]); rules.push(r); } }); });
+  D={t:{key:'free',name:'Free mode',days:[]},di:0,day:{name:'Free session',ch:[]},free:true,sel,n,rules,q,i:0,cash:0,warn:2,ok:0,miss:[],times:[],t0:0,showNew:false};
+  deskCase();
+}
+function freeEnd(){
+  const n=D.q.length, pct=D.ok/n, avg=D.times.reduce((a,b)=>a+b,0)/n, miss=[...new Map(D.miss.map(x=>[x.concept||x.q.concept,x.q||x])).values()];
+  const mm=Math.floor(avg/60)+':'+String(Math.round(avg%60)).padStart(2,'0');
+  $('#app').innerHTML=`<h1>Free session report</h1><div class="paper"><p>Correct: <b>${D.ok}/${n}</b> (${Math.round(pct*100)}%) · Earnings: <b>€${D.cash}</b> · Average time per case: <b>${mm}</b></p>
+   ${miss.length?`<b>Review these:</b><ul>${miss.map(q=>`<li>${q.concept} — <span class="mu">${q.ref}</span></li>`).join('')}</ul>`:'<p>Clean session. No citations.</p>'}</div>
+   <p><button onclick="freeStart(D.sel,D.n)">Same chapters again</button> <button class="sec" onclick="freeSetup()">Change chapters</button> <button class="sec" onclick="home()">Back to menu</button></p>`;
 }
 
 home();
