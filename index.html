@@ -85,6 +85,7 @@ canvas.pt{image-rendering:crisp-edges;image-rendering:pixelated;width:128px;heig
 .bigstamp.a{color:#2f6a24}.bigstamp.r{color:#a8352b}
 @keyframes slam{0%{transform:scale(3.2) rotate(-14deg);opacity:0}70%{transform:scale(.92) rotate(-8deg);opacity:1}100%{transform:scale(1) rotate(-8deg);opacity:1}}
 table{font-size:20px}
+.scene{font-size:23px;line-height:1.15}.say{font-size:24px;background:#efe8cc;border-left:6px solid #a8352b;padding:8px 10px;margin:4px 0 8px}details.tech{margin:8px 0;font-size:18px;border:2px dashed #8a7f5c;padding:4px 8px}details.tech summary{cursor:pointer;font-size:10px;font-family:'Press Start 2P',monospace}.quote{font-size:23px;border-left:6px solid var(--ac);padding-left:10px}
 </style>
 </head>
 <body>
@@ -431,6 +432,74 @@ const QBANK = [
  options:['Asset turnover','Profit margin','Return on assets','Current ratio'],
  explain:'Asset turnover = net sales / average total assets.'}
 ];
+const BIZ=[
+['Sofía Reyes','Freelance designer',"I can keep my $20/hour client job for 10 hours a week, or spend those same 10 hours at a workshop. It costs $50 in materials and would raise the value of my work by $300. Is the workshop worth it? Tell me my net economic benefit versus just working.","Net benefit of the workshop: {v} dollars."],
+['Daniel Okafor','Engineering student',"My study hours pay off less each time: the 1st hour is worth $40 to me, the 2nd $30, the 3rd $20, the 4th $10. Every hour costs me $25 in lost sleep and free time. How many hours should I study?","I will study {v} hours."],
+['Priya Nair','Marketing director, Lumo Snacks',"Our advertising brings a total benefit of 120Q − 3Q², where Q is the number of ad slots. Each costs us 20, plus a fixed 100 for the agency. How many slots should we buy to get the most net benefit?","We will buy {v} ad slots."],
+['Hugo Brandt','Board advisor, Kessel Logistics',"My board keeps saying the market is in equilibrium. Before I repeat it in front of investors, what does that mean, exactly?","Equilibrium means: “{v}”"],
+['Amira Haddad','Data analyst, FreshBox',"We found that app users who join our loyalty club spend more, but an unobserved factor, like how much they love cooking, drives both. Our dashboard shows a causal link. What is this problem called?","This problem is called: “{v}”"],
+['Chief Marta Ilves','Police commissioner',"Cities with more officers per capita have more crime. The mayor wants to cut police to cut crime. But high-crime cities hire more police. What is this analytical pitfall?","The pitfall is: “{v}”"],
+['Leo Fischer','Startup founder',"My investors ask why economists use simplified models that ignore so much. They say it is naive. What do I answer?","The answer: “{v}”"],
+['Nadia Petrova','Factory manager, Brightwell',"With 3 workers the line makes 30 units. With 4 workers it makes 38. I am deciding whether to hire the 4th worker. How many units does he add?","The 4th worker adds {v} units."],
+['Tom Verhoeven','Concert-goer, a client',"I paid $100 for a non-refundable ticket. Tonight I would honestly rather stay home and rest; that is worth $30 more to me than going. What should I do?","My decision: “{v}”"],
+['Camila Duarte','Head of growth, Pixelpay',"Online ads give a total benefit of 200Q − 4Q² and each ad costs a constant $40. How many ads should we run to get the highest net benefit?","We will run {v} ads."],
+['Ines Carvalho','Café owner',"Our model says optimal demand is Q = 50 − 2P. I am raising the price of a latte from $5 to $10. By how many units will quantity demanded change?","Quantity demanded changes by {v} units."],
+['Rahul Mehta','Commodity trader',"Demand for our product is Qd = 100 − 10P and supply is Qs = 10 + 20P. At what price will the market settle?","The market settles at ${v}."],
+['Councillor Bea Lindqvist','City housing office',"Same market: Qd = 100 − 10P, Qs = 10 + 20P. We want to cap the price at $2 to protect consumers. How big is the shortage?","The shortage will be {v} units."],
+['Jonas Weber','Retail analyst',"Our customers' incomes are rising and our product is a normal good. What happens to the market?","Our forecast: “{v}”"],
+['Elena Rossi','Procurement lead, Gelato Co.',"Demand is Qd = 200 − 5P and supply is Qs = 50 + 10P. How many units will actually trade at equilibrium?","Equilibrium quantity: {v} units."],
+['Marcus Lee','Household client',"I earn $120 a month for snacks. Apples are $4 and bananas $2. I already bought 15 apples. How many bananas can I afford at most?","I can afford {v} bananas."],
+['Zoe Martin','Theatre-goer',"I would pay up to $80 for a ticket and I got it at $30. How much consumer surplus did I gain?","My consumer surplus is ${v}."],
+['Pablo Navarro','Pricing manager, CineMax',"We raised the price from $10 to $12 and demand dropped from 100 to 80. Using percent changes relative to initial values, what is the magnitude of price elasticity?","Price elasticity magnitude: {v}."],
+['Greta Holm','Category manager, Nordic Foods',"The cross-price elasticity between our butter and a rival's margarine is +1.5. How are the two goods related?","They are: “{v}”"],
+['Viktor Sandoval','Owner, Sandoval Bakery',"In a perfectly competitive market I face a price of $50. My total cost is TC = 100 + 10Q + 2Q². How many units should I produce to maximize profit?","I will produce {v} units."],
+['Aisha Khan','Owner, Khan Crafts',"I sell 10 units at a constant $40. My total variable cost is $250. What is my producer surplus?","My producer surplus is ${v}."],
+['Oliver Grant','Plant manager, Grant Steel',"Making 4 units costs $120 in total; making 5 costs $155. What is the marginal cost of the 5th unit?","Marginal cost of the 5th unit: ${v}."],
+['Sven Aronsson','CFO, Aronsson Farms',"Prices have crashed. When should a firm in perfect competition shut down in the short run?","Shut down: “{v}”"],
+['Mayor Clara Boone','Mayor, Riverton',"A factory's private marginal cost is MC = 10 + Q and it adds a constant external cost of 10 to the town. Demand (marginal social benefit) is P = 50 − Q. What quantity is socially optimal?","The socially optimal quantity is {v} units."],
+['Judge Anna Kovacs','Mediator, neighbor dispute',"A factory causes $1,000 of pollution damage to a homeowner. A filter costing $400 would eliminate it. Transaction costs are zero and the homeowner holds the property right. What is the most the factory would pay for the right to pollute?","The factory will pay at most ${v}."],
+['Dr. Lena Park','Public health director',"We want more people vaccinated, but the positive effects spill over to others. Which tool fits best?","I propose: “{v}”"],
+['Ravi and Meera Shah','Neighbors',"We are splitting a $300 security camera. Each of us values it at $200 and nobody can be excluded from its benefit. What is the net social benefit of installing it?","Net social benefit: ${v}."],
+['Hannah Brooks','Market organizer, Greenmarket',"Demand is Qd = 100 − P and supply is Qs = P in a perfectly competitive market. What is the producer surplus at equilibrium?","Producer surplus: {v}."],
+['Hannah Brooks','Market organizer, Greenmarket',"Same market (Qd = 100 − P, Qs = P). What is the total surplus, consumers plus producers, at the competitive equilibrium?","Total surplus: {v}."],
+['Ibrahim Yilmaz','Wholesaler',"Demand is Qd = 200 − 2P and supply is Qs = 50 + 3P. At what price will my market clear?","The equilibrium price is ${v}."],
+['Ms. Fiona Gallagher','Commission advisor',"A student asked me what the equilibrium price actually does in a perfectly competitive market. What is its main function?","Its main function: “{v}”"],
+['Ann and Ben Torres','Partners, Torres Kitchen',"In one hour Ann can make 6 pizzas or 3 cakes. Ben can make 2 pizzas or 2 cakes. Who should specialize in cakes?","Cakes should go to: “{v}”"],
+['Minister Adaeze Obi','Trade ministry',"Our closed economy has demand Qd = 100 − P and supply Qs = P. We open to trade at a world price of 30. How many units will we import?","We will import {v} units."],
+['Minister Adaeze Obi','Trade ministry',"Same market (Qd = 100 − P, Qs = P), world price 30. We now add a tariff of 10 per unit. How many units will we import?","Imports will be {v} units."],
+['Minister Adaeze Obi','Trade ministry',"With world price 30 and a tariff of 10, the domestic price is 40 and imports fall from 40 to 20. What is the deadweight loss of the tariff?","The deadweight loss is {v}."],
+['Carlos Mendoza','Exporter association',"Our country opens to trade and becomes an exporter of this good. Which group gains surplus?","The winners: “{v}”"],
+['Revenue Officer Jana Novak','Tax authority',"Demand is Qd = 100 − P and supply is Qs = P. We will collect a $10 excise tax from sellers. What is the new equilibrium quantity?","New equilibrium quantity: {v}."],
+['Revenue Officer Jana Novak','Tax authority',"Demand is Qd = 120 − P and supply is Qs = 20 + P. We levy a tax of $20 per unit. How much tax revenue will the government collect?","Tax revenue: ${v}."],
+['Revenue Officer Jana Novak','Tax authority',"Demand is Qd = 100 − P and supply is Qs = P. A $20 tax cuts the quantity traded from 50 to 40. What is the deadweight loss?","Deadweight loss: {v}."],
+['Finance Minister Stefan Kral','Treasury',"Our critics say an excise tax only moves money around. What does it really create in the market?","It creates: “{v}”"],
+['Beatrix Lang','CEO, Lang Pharma (monopolist)',"We are a monopolist. Inverse demand is P = 100 − Q and total cost is TC = 20Q. How much should we produce to maximize profit?","We will produce {v} units."],
+['Kenji Mori','CEO, Mori Software',"We have zero marginal cost and face inverse demand P = 120 − 2Q. What price should we charge?","We will charge ${v}."],
+['Prof. Alma Reyes','Regulator',"Our board asked how a monopolist's pricing rule differs from a perfectly competitive firm's. Please explain.","The difference: “{v}”"],
+['Marit Jansen','CFO, Orion Services',"Orion began the year with total assets of €120,000 and liabilities of €45,000. During the year assets rose €30,000 and liabilities fell €15,000. We paid €10,000 in dividends and issued new shares for €20,000. What was net income?","Our net income was €{v}."],
+['Tobias Klein','Founder, Klein & Sons',"I run my shop and my household from the same bank account. My accountant says this violates a core assumption. Which one?","The assumption: “{v}”"],
+['Tariq Aziz','Bookkeeper, Vanguard Consulting',"We bought equipment costing €18,000. We paid €5,000 in cash and agreed to pay the rest within 30 days. I recorded the entry below. Is it right?",""],
+['Sana Iqbal','Junior accountant',"I posted a €450 debit to Rent Expense as a €450 credit to Rent Expense. Everything else is correct. How does this affect the trial balance?","The trial balance shows: “{v}”"],
+['Dirk Maas','Controller, Apex',"On Oct 1, 2026 Apex paid €12,000 for a 1-year insurance policy (debited to Prepaid Insurance). On Dec 1, 2026 we borrowed €50,000 on a 6-month, 6% note. These are the adjusting entries our bookkeeper posted at Dec 31, 2026.",""],
+['Lucía Fernández','Auditor',"On Nov 1, 2026 a company collected €9,000 for 6 months of consulting (Nov–Apr), crediting Unearned Service Revenue. At Dec 31 no adjustment was made. What is the effect on the statements?","My finding: “{v}”"],
+['Anders Solis','Owner, Solis Co.',"At Dec 31, 2026 Solis Co. reports Service Revenue €85,000, Salaries Expense €40,000, Rent Expense €15,000 and Dividends €8,000. These are the closing entries our team made (Income Summary method).",""],
+['Mirela Popescu','Audit senior',"We are preparing the final check of the books after closing. Which account should still appear on the post-closing trial balance?","I say: “{v}”"],
+['Retailer Corp. Bookkeeper Jake','Retailer Corp.',"On May 10 Retailer Corp. sold goods on account for €6,000 (cost €3,600), terms 2/10, n/30. On May 12 the customer returned defective goods with sales price €1,000 (cost €600) to inventory. Perpetual system. These are the entries we recorded for both dates.",""],
+['Ola Berg','Store manager',"Our merchandiser reports Sales Revenue €250,000, Sales Discounts €5,000, Sales Returns and Allowances €10,000, Freight-Out €4,000 and COGS €140,000. What is our gross profit?","Gross profit: “{v}”"],
+['Greta Voss','Warehouse manager',"Beginning inventory was 200 units at €10. Purchase 1: 300 units at €12. Purchase 2: 500 units at €15. We sold 700 units. What is COGS using weighted average?","COGS is €{v}."],
+['Hector Alvarez','Investor',"Prices of our inventory keep rising. Which inventory cost flow method gives the highest net income?","The method: “{v}”"],
+['Birgit Tanner','Plant controller',"Equipment costing €40,000 had accumulated depreciation of €28,000 at Dec 31, 2025. On July 1, 2026 we sold it for €9,500 cash. Depreciation for Jan–Jun 2026 is €3,000. These are the entries our team posted for the depreciation update and the sale.",""],
+['Wouter de Vries','Owner, De Vries Machines',"We bought equipment for €50,000, residual value €5,000, useful life 5 years, using double-declining-balance. What is Year 2 depreciation?","Year 2 depreciation: €{v}."],
+['Leila Mansour','Finance trainee',"My manager asked which of the following is a current liability for our balance sheet.","My answer: “{v}”"],
+['Nova Corp. Treasurer Ines','Nova Corp.',"Nova Corp. issued 5,000 ordinary shares with a par value of €10 for cash at €16 per share. This is the entry our treasury team recorded.",""],
+['Sebastian Roth','Investor relations, Roth AG',"Net income is €120,000, preference dividends €10,000, beginning ordinary shareholders' equity €450,000, ending €550,000. What is our return on ordinary shareholders' equity?","Our ROE: {v}%."],
+['Mia Andersson','CFO, Andersson Foods',"Net income is €150,000, depreciation €25,000, accounts receivable increased by €12,000 and accounts payable increased by €8,000. What is net cash from operating activities (indirect method)?","Operating cash flow: €{v}."],
+['Pieter Bos','Credit analyst',"For the bank we need to classify cash flows. How does the textbook classify payment of a cash dividend to shareholders?","The classification: “{v}”"],
+['Yara Costa','Credit analyst, Banco Sul',"Current assets are €350,000 (including inventory €90,000 and prepaid expenses €10,000); current liabilities are €140,000. What is the quick ratio?","Quick ratio: {v}."],
+['Nils Eriksen','Analyst',"Which ratio shows how many times a company converts its average total assets into net sales?","The ratio: “{v}”"]
+];
+
+QBANK.forEach((q,i)=>{const b=BIZ[i];q.biz={who:b[0],role:b[1],text:b[2],say:b[3]||''};});
 const SUBJ = [...new Set(QBANK.map(q=>q.subj))];
 
 /* ============ ESTADO Y ALMACENAMIENTO ============ */
@@ -728,7 +797,7 @@ function mutate(lines,i){
   else L.a=pick(accNames().filter(x=>x!==o.a&&!lines.some(y=>y.a===x)));
 }
 function mkCase(q){
-  const ok=Math.random()<0.5, c={q,ok,client:pick(CLIENTS)};
+  const ok=Math.random()<0.5, c={q,ok,client:q.biz.who};
   if(q.type==='numeric') c.claim=ok?q.answer:wrongNum(q);
   else if(q.type==='choice') c.claim=ok?q.answer:pick(q.options.map((_,i)=>i).filter(i=>i!==q.answer));
   else { c.lines=q.lines.map(l=>({...l})); if(!ok){ c.mut=Math.floor(Math.random()*c.lines.length); mutate(c.lines,c.mut); } }
@@ -763,13 +832,15 @@ function deskCase(){
   if(D.i>=D.q.length) return deskEnd();
   const c=D.q[D.i], q=c.q; D.t0=Date.now(); D.dec=false; D.pick=null; D.picking=false;
   let claim;
-  if(q.type==='numeric') claim=`<div class="big">${fmtV(q,c.claim)}</div>`;
-  else if(q.type==='choice') claim=`<div class="big" style="font-size:19px">“${q.options[c.claim]}”</div>`;
+  const say=(t)=>`<div class="say">${t}</div>`;
+  if(q.type==='numeric') claim=say(q.biz.say.replace('{v}','<b>'+fmtV(q,c.claim)+'</b>'));
+  else if(q.type==='choice') claim=say(q.biz.say.replace('{v}','<b>'+q.options[c.claim]+'</b>').replace(/“(?=<b>)/,'“'));
   else claim=`<table id="ft"><tr><th>Account</th><th class="n">Debit</th><th class="n">Credit</th></tr>${c.lines.map((l,i)=>`<tr class="fl" onclick="pickLine(${i})"><td style="padding-left:${l.s==='C'?28:8}px">${l.a}</td><td class="n">${l.s==='D'?f(l.v):''}</td><td class="n">${l.s==='C'?f(l.v):''}</td></tr>`).join('')}</table>`;
   $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>CASE ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
   <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${c.client}"></canvas><div class="counter"><div class="plate">${c.client.toUpperCase()}</div></div></div>
-  <div class="desktop"><div class="grid2"><div class="paper"><div class="mu">CLIENT: ${c.client.toUpperCase()}</div><p style="margin:6px 0 12px">${q.question}</p>
-   <div class="mu">${q.type==='multientry'?'ENTRY FILED BY THE CLIENT':'CLIENT\'S ANSWER'}</div>${claim}<textarea rows="3" placeholder="Scratchpad"></textarea></div>${rulesHtml()}</div></div>
+  <div class="desktop"><div class="grid2"><div class="paper"><div class="mu">${c.client.toUpperCase()} · ${q.biz.role.toUpperCase()}</div><p class="scene">“${q.biz.text}”</p>
+   <details class="tech"><summary>Technical brief (exam wording)</summary>${q.question}</details>
+   <div class="mu">${q.type==='multientry'?'ENTRY POSTED BY THEIR BOOKKEEPER':q.type==='choice'?'THEIR POSITION':'THEIR PROPOSAL'}</div>${claim}<textarea rows="3" placeholder="Scratchpad"></textarea></div>${rulesHtml()}</div></div>
   <p id="act"><button class="appr" onclick="approve()">✔ APPROVE</button> <button class="rej" onclick="openReject()">✘ REJECT</button></p><div id="rej"></div><div id="verdict"></div>`;
   drawPortraits(); sfx('bell');
   clearInterval(CK); CK=setInterval(tick,1000); tick();
@@ -799,6 +870,7 @@ function correctText(c){ const q=c.q;
 }
 function settle(good,msg,act){
   const c=D.q[D.i], q=c.q; D.dec=true; D.picking=false; clearInterval(CK);
+  const react=act==='A'?(good?'Perfect, we will go ahead.':'We went ahead on your word, and it cost us.'):(good?'Glad we checked. We will fix this before it costs us.':(c.ok?'You held up a perfectly good plan. We are losing time.':'So it was wrong, but your fix will not work either.'));
   D.times.push((Date.now()-D.t0)/1000);
   const d=store.get(), m=d.m[q.concept]||(d.m[q.concept]={r:0,w:0,ref:q.ref}); good?m.r++:m.w++; store.set(d);
   let label;
@@ -809,7 +881,7 @@ function settle(good,msg,act){
   $('.paper').insertAdjacentHTML('beforeend',`<div class="bigstamp ${act==='A'?'a':'r'}">${act==='A'?'APPROVED':'REJECTED'}</div>`);
   sfx('stamp'); setTimeout(()=>sfx(good?'ok':'bad'),200); const pt=$('#pt'); if(pt) pt.classList.add('leave');
   document.querySelectorAll('#act button').forEach(b=>b.disabled=true); $('#rej').innerHTML='';
-  $('#verdict').innerHTML=`<div class="card"><span class="stamp ${good?'ok':'ko'}">${label}</span><p>${msg}</p><p><b>Correct:</b> ${correctText(c)}</p><p class="mu">${q.explain} · ${q.ref}</p><button onclick="D.i++;deskCase()">Next client →</button></div>`;
+  $('#verdict').innerHTML=`<div class="card"><span class="stamp ${good?'ok':'ko'}">${label}</span><p class="quote">“${react}” <span class="mu">— ${c.client}</span></p><p>${msg}</p><p><b>Correct:</b> ${correctText(c)}</p><p class="mu">${q.explain} · ${q.ref}</p><button onclick="D.i++;deskCase()">Next client →</button></div>`;
   $('#verdict').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function deskEnd(){
