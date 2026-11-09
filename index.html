@@ -86,6 +86,7 @@ canvas.pt{image-rendering:crisp-edges;image-rendering:pixelated;width:128px;heig
 @keyframes slam{0%{transform:scale(3.2) rotate(-14deg);opacity:0}70%{transform:scale(.92) rotate(-8deg);opacity:1}100%{transform:scale(1) rotate(-8deg);opacity:1}}
 table{font-size:20px}
 .scene{font-size:23px;line-height:1.15}.say{font-size:24px;background:#efe8cc;border-left:6px solid #a8352b;padding:8px 10px;margin:4px 0 8px}details.tech{margin:8px 0;font-size:18px;border:2px dashed #8a7f5c;padding:4px 8px}details.tech summary{cursor:pointer;font-size:10px;font-family:'Press Start 2P',monospace}.quote{font-size:23px;border-left:6px solid var(--ac);padding-left:10px}
+.paper .opt{background:#efe8cc;color:#2a2622;font-size:20px}table.mini{width:100%;font-size:17px;margin:2px 0}table.tb{width:100%;margin:6px 0}table.tb td,table.tb th{padding:3px 6px}
 </style>
 </head>
 <body>
@@ -478,20 +479,20 @@ const BIZ=[
 ['Prof. Alma Reyes','Regulator',"Our board asked how a monopolist's pricing rule differs from a perfectly competitive firm's. Please explain.","The difference: “{v}”"],
 ['Marit Jansen','CFO, Orion Services',"Orion began the year with total assets of €120,000 and liabilities of €45,000. During the year assets rose €30,000 and liabilities fell €15,000. We paid €10,000 in dividends and issued new shares for €20,000. What was net income?","Our net income was €{v}."],
 ['Tobias Klein','Founder, Klein & Sons',"I run my shop and my household from the same bank account. My accountant says this violates a core assumption. Which one?","The assumption: “{v}”"],
-['Tariq Aziz','Bookkeeper, Vanguard Consulting',"We bought equipment costing €18,000. We paid €5,000 in cash and agreed to pay the rest within 30 days. I recorded the entry below. Is it right?",""],
+['Tariq Aziz','Bookkeeper, Vanguard Consulting',"We bought equipment costing €18,000. We paid €5,000 in cash and agreed to pay the rest within 30 days.¦ I recorded the entry below. Is it right?",""],
 ['Sana Iqbal','Junior accountant',"I posted a €450 debit to Rent Expense as a €450 credit to Rent Expense. Everything else is correct. How does this affect the trial balance?","The trial balance shows: “{v}”"],
-['Dirk Maas','Controller, Apex',"On Oct 1, 2026 Apex paid €12,000 for a 1-year insurance policy (debited to Prepaid Insurance). On Dec 1, 2026 we borrowed €50,000 on a 6-month, 6% note. These are the adjusting entries our bookkeeper posted at Dec 31, 2026.",""],
+['Dirk Maas','Controller, Apex',"On Oct 1, 2026 Apex paid €12,000 for a 1-year insurance policy (debited to Prepaid Insurance). On Dec 1, 2026 we borrowed €50,000 on a 6-month, 6% note. We need the adjusting entries at Dec 31, 2026.¦ These are the ones our bookkeeper posted.",""],
 ['Lucía Fernández','Auditor',"On Nov 1, 2026 a company collected €9,000 for 6 months of consulting (Nov–Apr), crediting Unearned Service Revenue. At Dec 31 no adjustment was made. What is the effect on the statements?","My finding: “{v}”"],
-['Anders Solis','Owner, Solis Co.',"At Dec 31, 2026 Solis Co. reports Service Revenue €85,000, Salaries Expense €40,000, Rent Expense €15,000 and Dividends €8,000. These are the closing entries our team made (Income Summary method).",""],
+['Anders Solis','Owner, Solis Co.',"At Dec 31, 2026 Solis Co. reports Service Revenue €85,000, Salaries Expense €40,000, Rent Expense €15,000 and Dividends €8,000. We need the closing entries (Income Summary method).¦ These are the ones our team made.",""],
 ['Mirela Popescu','Audit senior',"We are preparing the final check of the books after closing. Which account should still appear on the post-closing trial balance?","I say: “{v}”"],
-['Retailer Corp. Bookkeeper Jake','Retailer Corp.',"On May 10 Retailer Corp. sold goods on account for €6,000 (cost €3,600), terms 2/10, n/30. On May 12 the customer returned defective goods with sales price €1,000 (cost €600) to inventory. Perpetual system. These are the entries we recorded for both dates.",""],
+['Retailer Corp. Bookkeeper Jake','Retailer Corp.',"On May 10 Retailer Corp. sold goods on account for €6,000 (cost €3,600), terms 2/10, n/30. On May 12 the customer returned defective goods with sales price €1,000 (cost €600) to inventory. Perpetual system. We need the entries for both dates.¦ These are the ones we recorded.",""],
 ['Ola Berg','Store manager',"Our merchandiser reports Sales Revenue €250,000, Sales Discounts €5,000, Sales Returns and Allowances €10,000, Freight-Out €4,000 and COGS €140,000. What is our gross profit?","Gross profit: “{v}”"],
 ['Greta Voss','Warehouse manager',"Beginning inventory was 200 units at €10. Purchase 1: 300 units at €12. Purchase 2: 500 units at €15. We sold 700 units. What is COGS using weighted average?","COGS is €{v}."],
 ['Hector Alvarez','Investor',"Prices of our inventory keep rising. Which inventory cost flow method gives the highest net income?","The method: “{v}”"],
-['Birgit Tanner','Plant controller',"Equipment costing €40,000 had accumulated depreciation of €28,000 at Dec 31, 2025. On July 1, 2026 we sold it for €9,500 cash. Depreciation for Jan–Jun 2026 is €3,000. These are the entries our team posted for the depreciation update and the sale.",""],
+['Birgit Tanner','Plant controller',"Equipment costing €40,000 had accumulated depreciation of €28,000 at Dec 31, 2025. On July 1, 2026 we sold it for €9,500 cash. Depreciation for Jan–Jun 2026 is €3,000. We need the entries for the depreciation update and the sale.¦ These are the ones our team posted.",""],
 ['Wouter de Vries','Owner, De Vries Machines',"We bought equipment for €50,000, residual value €5,000, useful life 5 years, using double-declining-balance. What is Year 2 depreciation?","Year 2 depreciation: €{v}."],
 ['Leila Mansour','Finance trainee',"My manager asked which of the following is a current liability for our balance sheet.","My answer: “{v}”"],
-['Nova Corp. Treasurer Ines','Nova Corp.',"Nova Corp. issued 5,000 ordinary shares with a par value of €10 for cash at €16 per share. This is the entry our treasury team recorded.",""],
+['Nova Corp. Treasurer Ines','Nova Corp.',"Nova Corp. issued 5,000 ordinary shares with a par value of €10 for cash at €16 per share. We need the entry.¦ This is the one our treasury team recorded.",""],
 ['Sebastian Roth','Investor relations, Roth AG',"Net income is €120,000, preference dividends €10,000, beginning ordinary shareholders' equity €450,000, ending €550,000. What is our return on ordinary shareholders' equity?","Our ROE: {v}%."],
 ['Mia Andersson','CFO, Andersson Foods',"Net income is €150,000, depreciation €25,000, accounts receivable increased by €12,000 and accounts payable increased by €8,000. What is net cash from operating activities (indirect method)?","Operating cash flow: €{v}."],
 ['Pieter Bos','Credit analyst',"For the bank we need to classify cash flows. How does the textbook classify payment of a cash dividend to shareholders?","The classification: “{v}”"],
@@ -562,7 +563,7 @@ function drill(si,n){
 const norm=s=>s.toLowerCase().replace(/[—–-]/g,' ').replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();
 function rowHtml(){ return '<tr><td><input type="text" list="accl" style="width:100%"></td><td><input type="number" step="any" style="width:100px"></td><td><input type="number" step="any" style="width:100px"></td></tr>'; }
 function addRow(){ $('#rows').insertAdjacentHTML('beforeend',rowHtml()); }
-function accNames(){ return [...new Set([...Object.keys(ACC),...QBANK.flatMap(q=>(q.lines||[]).map(l=>l.a))])].sort(); }
+function accNames(){ return [...new Set([...Object.keys(ACC),...Object.keys(WA),...QBANK.flatMap(q=>(q.lines||[]).map(l=>l.a))])].sort(); }
 
 function step(){
   const c=S.case, st=c.steps[S.i];
@@ -732,6 +733,15 @@ function drawPortraits(){ document.querySelectorAll('canvas.pt').forEach(cv=>pai
 /* ============ CAREER MODE: Consultant Desk ============ */
 let D=null, CK=null;
 const TRACKS=[
+ {key:'book',kind:'work',name:'Bookkeeping Desk',desc:'Junior Bookkeeper: record journal entries and prepare trial balances from raw transactions.',days:[
+  {name:'First entries',ch:[1],memo:'Welcome to the ledger. Clients hand you raw transactions; you turn them into journal entries. Debits equal credits. Always.',gen:()=>shuffle(mkJE(JE1))},
+  {name:'Daily ledger',ch:[2],memo:'Collections, payments, payroll and loans. Watch out: some cash movements are not revenue or expenses.',gen:()=>shuffle(mkJE(JE2))},
+  {name:'Trial balance',ch:[3],memo:'Month-end check. Put every balance on its normal side and make the columns agree. Pass today and you are promoted to Senior Accountant.',gen:()=>shuffle([mkTB('tb1'),mkTB('tb1'),mkTB('tb2'),mkTB('tb2'),...mkJE([pick(JE1),pick(JE2)])])}]},
+ {key:'fs',kind:'work',name:'Senior Accountant · Financial Statements',needs:'promoted',desc:'Senior Accountant: adjust the books and prepare the income statement and balance sheet.',days:[
+  {name:'Adjusting entries',ch:[1],memo:'Period end. Cash and accounting do not always move together: accruals, prepayments and depreciation.',gen:()=>shuffle([...mkJE(JE3),...mkJE([pick(JE3),pick(JE3)])])},
+  {name:'Income statement',ch:[2],memo:'Time to report. Sort every account into its statement, then work out revenues, expenses and net income.',gen:()=>shuffle([mkCLS(),mkCLS(),mkIS(),mkIS(),mkIS(),mkIS()])},
+  {name:'Balance sheet',ch:[3],memo:'Roll net income into retained earnings and prove that assets equal liabilities plus equity.',gen:()=>shuffle([mkIS(),mkIS(),mkBS(),mkBS(),mkBS(),mkBS()])},
+  {name:'The full set',ch:[4],memo:'Everything at once: adjustments, trial balance, income statement, balance sheet. This is what the partners sign.',gen:()=>shuffle([...mkJE([pick(JE3),pick(JE3)]),mkCLS(),mkIS(),mkBS(),mkBS(),mkTB('tb1'),mkTB('tb2')])}]},
  {key:'econ',name:'Economics Advisory',subj:E,days:[
   {name:'Orientation',ch:[1,2,3],memo:'Welcome aboard. Clients bring numbers; your job is to catch the ones that do not add up. Check every claim against the rulebook before you stamp.'},
   {name:'Market desk',ch:[4,5],memo:'Busy day: prices, shortages and elasticities. A wrong equilibrium costs the client real money.'},
@@ -746,6 +756,15 @@ const TRACKS=[
   {name:'Equity, cash & ratios',ch:[12,14,15],memo:'Final audit day: shares, cash flows and ratios. Investors read these first.'}]}
 ];
 const RULES={
+ book:{
+  1:['Debits & credits','Debit increases: assets, expenses, dividends. Credit increases: liabilities, equity, revenue. Every entry: total debits = total credits. Cash in → Dr Cash. Buying on credit → Cr Accounts Payable. Prepaid items are assets until used.'],
+  2:['Daily transactions','Collecting a receivable: Dr Cash, Cr Accounts Receivable (no new revenue). Paying a supplier: Dr Accounts Payable, Cr Cash. Dividends: Dr Dividends (not an expense). Cash received in advance is a liability: Cr Unearned Service Revenue.'],
+  3:['Trial balance','Normal debit: assets, expenses, dividends. Normal credit: liabilities, share capital, retained earnings, revenue, accumulated depreciation (contra-asset). Total debits must equal total credits; a missing amount is the difference.']},
+ fs:{
+  1:['Adjusting entries','Depreciation: Dr Depreciation Expense, Cr Accumulated Depreciation. Accrued expense: Dr expense, Cr payable. Prepaid expired: Dr expense, Cr prepaid. Unearned earned: Dr Unearned Revenue, Cr Revenue. Supplies used = start − count. Interest = principal × rate × time.'],
+  2:['Income statement','Revenues − Expenses = Net income. Only revenue and expense accounts. Dividends are not an expense. Assets, liabilities, share capital and retained earnings go to the balance sheet; dividends to the statement of retained earnings.'],
+  3:['Balance sheet','Ending RE = beginning RE + net income − dividends. Assets are shown net of accumulated depreciation. Equity = share capital + ending RE. Check: Assets = Liabilities + Equity.'],
+  4:['Order of preparation','Income statement → statement of retained earnings → balance sheet → check A = L + E.']},
  econ:{
   1:['Ch.1-3 · Decisions','Do an activity while Marginal Benefit ≥ Marginal Cost; the optimum is MB = MC (MB = d(TB)/dQ). Opportunity cost = value of the best alternative given up. Ignore sunk costs. Correlation ≠ causation: look for omitted variables and reverse causality.'],
   4:['Ch.4 · Supply & demand','Equilibrium: Qd = Qs. Price below P* → shortage (Qd − Qs); above → surplus. Higher income shifts demand right for a normal good. A price ceiling only binds below P*.'],
@@ -778,9 +797,10 @@ const fmtV=(q,v)=>(q.unit==='$'||q.unit==='€')?q.unit+f(v):f(v)+(q.unit?' '+q.
 function careerHome(){
   const d=store.get(); d.career=d.career||{};
   let h=`<h2>Career mode · Consultant Desk</h2>`;
-  TRACKS.forEach(t=>{ const un=d.career[t.key]||1;
-    h+=`<div class="card"><h3>${t.name}</h3><div class="mu">Review client work: approve it or reject it and show what is wrong.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">`+
-    t.days.map((dy,i)=>`<button class="${i<un?'':'sec'}" ${i<un?'':'disabled'} onclick="deskStart('${t.key}',${i})">Day ${i+1}<br><small>${dy.name}</small></button>`).join('')+`</div></div>`; });
+  TRACKS.forEach(t=>{ const lock=t.needs&&!d.career[t.needs], un=d.career[t.key]||1, st=t.kind==='work'?'workStart':'deskStart';
+    const sub=t.desc||'Review client work and decide: approve it, reject it, or pick the right answer.';
+    h+=`<div class="card"><h3>${t.name}${lock?' 🔒':''}</h3><div class="mu">${sub}${lock?' · Pass every day of the Bookkeeping Desk to be promoted.':''}</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">`+
+    t.days.map((dy,i)=>{ const on=!lock&&i<un; return `<button class="${on?'':'sec'}" ${on?'':'disabled'} onclick="${st}('${t.key}',${i})">Day ${i+1}<br><small>${dy.name}</small></button>`; }).join('')+`</div></div>`; });
   return h;
 }
 
@@ -797,7 +817,14 @@ function mutate(lines,i){
   else L.a=pick(accNames().filter(x=>x!==o.a&&!lines.some(y=>y.a===x)));
 }
 function mkCase(q){
-  const ok=Math.random()<0.5, c={q,ok,client:q.biz.who};
+  const rev=Math.random()<(q.type==='multientry'?0.35:0.3);
+  const ok=Math.random()<0.5, c={q,ok,client:q.biz.who,mode:rev?'review':'mc'};
+  if(!rev){
+    if(q.type==='numeric') c.opts=shuffle([{t:fmtV(q,q.answer),ok:true},...wrongNums(q,3).map(v=>({t:fmtV(q,v),ok:false}))]);
+    else if(q.type==='choice') c.opts=shuffle(q.options.map((t,i)=>({t,ok:i===q.answer})));
+    else c.opts=mcEntries(q);
+    return c;
+  }
   if(q.type==='numeric') c.claim=ok?q.answer:wrongNum(q);
   else if(q.type==='choice') c.claim=ok?q.answer:pick(q.options.map((_,i)=>i).filter(i=>i!==q.answer));
   else { c.lines=q.lines.map(l=>({...l})); if(!ok){ c.mut=Math.floor(Math.random()*c.lines.length); mutate(c.lines,c.mut); } }
@@ -831,17 +858,17 @@ function deskStart(key,di){
 function deskCase(){
   if(D.i>=D.q.length) return deskEnd();
   const c=D.q[D.i], q=c.q; D.t0=Date.now(); D.dec=false; D.pick=null; D.picking=false;
-  let claim;
+  let claim=''; const mc=c.mode==='mc';
   const say=(t)=>`<div class="say">${t}</div>`;
-  if(q.type==='numeric') claim=say(q.biz.say.replace('{v}','<b>'+fmtV(q,c.claim)+'</b>'));
+  if(mc){} else if(q.type==='numeric') claim=say(q.biz.say.replace('{v}','<b>'+fmtV(q,c.claim)+'</b>'));
   else if(q.type==='choice') claim=say(q.biz.say.replace('{v}','<b>'+q.options[c.claim]+'</b>').replace(/“(?=<b>)/,'“'));
-  else claim=`<table id="ft"><tr><th>Account</th><th class="n">Debit</th><th class="n">Credit</th></tr>${c.lines.map((l,i)=>`<tr class="fl" onclick="pickLine(${i})"><td style="padding-left:${l.s==='C'?28:8}px">${l.a}</td><td class="n">${l.s==='D'?f(l.v):''}</td><td class="n">${l.s==='C'?f(l.v):''}</td></tr>`).join('')}</table>`;
+  else if(!mc) claim=`<table id="ft"><tr><th>Account</th><th class="n">Debit</th><th class="n">Credit</th></tr>${c.lines.map((l,i)=>`<tr class="fl" onclick="pickLine(${i})"><td style="padding-left:${l.s==='C'?28:8}px">${l.a}</td><td class="n">${l.s==='D'?f(l.v):''}</td><td class="n">${l.s==='C'?f(l.v):''}</td></tr>`).join('')}</table>`;
   $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>CASE ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
   <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${c.client}"></canvas><div class="counter"><div class="plate">${c.client.toUpperCase()}</div></div></div>
-  <div class="desktop"><div class="grid2"><div class="paper"><div class="mu">${c.client.toUpperCase()} · ${q.biz.role.toUpperCase()}</div><p class="scene">“${q.biz.text}”</p>
+  <div class="desktop"><div class="grid2"><div class="paper"><div class="mu">${c.client.toUpperCase()} · ${q.biz.role.toUpperCase()}</div><p class="scene">“${scene(c)}”</p>
    <details class="tech"><summary>Technical brief (exam wording)</summary>${q.question}</details>
-   <div class="mu">${q.type==='multientry'?'ENTRY POSTED BY THEIR BOOKKEEPER':q.type==='choice'?'THEIR POSITION':'THEIR PROPOSAL'}</div>${claim}<textarea rows="3" placeholder="Scratchpad"></textarea></div>${rulesHtml()}</div></div>
-  <p id="act"><button class="appr" onclick="approve()">✔ APPROVE</button> <button class="rej" onclick="openReject()">✘ REJECT</button></p><div id="rej"></div><div id="verdict"></div>`;
+   ${mc?`<div class="mu">YOUR RULING</div>${mcHtml(c)}`:`<div class="mu">${q.type==='multientry'?'ENTRY POSTED BY THEIR BOOKKEEPER':q.type==='choice'?'THEIR POSITION':'THEIR PROPOSAL'}</div>${claim}`}<textarea rows="3" placeholder="Scratchpad"></textarea></div>${rulesHtml()}</div></div>
+  <p id="act">${mc?'<button class="appr" onclick="signMC()">✔ SIGN OFF ON SELECTED</button>':'<button class="appr" onclick="approve()">✔ APPROVE</button> <button class="rej" onclick="openReject()">✘ REJECT</button>'}</p><div id="rej"></div><div id="verdict"></div>`;
   drawPortraits(); sfx('bell');
   clearInterval(CK); CK=setInterval(tick,1000); tick();
 }
@@ -863,6 +890,7 @@ function reject(){ if(D.dec) return; const c=D.q[D.i], q=c.q; let corr;
   settle(corr, corr?'Good catch. You rejected it and found the real problem.':'You were right to reject, but your correction is wrong.','R');
 }
 function correctText(c){ const q=c.q;
+  if(q.type==='multientry'&&c.mode==='mc') return q.lines.map(l=>`${l.s==='D'?'Dr':'Cr'} ${l.a} ${f(l.v)}`).join(' · ');
   if(q.type==='numeric') return fmtV(q,q.answer);
   if(q.type==='choice') return q.options[q.answer];
   if(c.ok) return 'The filing was correct.';
@@ -870,15 +898,15 @@ function correctText(c){ const q=c.q;
 }
 function settle(good,msg,act){
   const c=D.q[D.i], q=c.q; D.dec=true; D.picking=false; clearInterval(CK);
-  const react=act==='A'?(good?'Perfect, we will go ahead.':'We went ahead on your word, and it cost us.'):(good?'Glad we checked. We will fix this before it costs us.':(c.ok?'You held up a perfectly good plan. We are losing time.':'So it was wrong, but your fix will not work either.'));
+  const react=act!=='R'?(good?'Perfect, we will go ahead.':'We went ahead on your word, and it cost us.'):(good?'Glad we checked. We will fix this before it costs us.':(c.ok?'You held up a perfectly good plan. We are losing time.':'So it was wrong, but your fix will not work either.'));
   D.times.push((Date.now()-D.t0)/1000);
   const d=store.get(), m=d.m[q.concept]||(d.m[q.concept]={r:0,w:0,ref:q.ref}); good?m.r++:m.w++; store.set(d);
   let label;
   if(good){ D.cash+=50; D.ok++; label='CORRECT +€50'; }
   else { D.miss.push(q); if(D.warn>0){ D.warn--; label='WARNING (free)'; } else { D.cash-=75; label='CITATION −€75'; } }
   $('#cash').textContent='€'+D.cash; $('#warn').textContent='WARN '+'■'.repeat(D.warn)+'□'.repeat(2-D.warn);
-  if(q.type==='multientry'&&!c.ok) document.querySelectorAll('.fl')[c.mut].classList.add('bad');
-  $('.paper').insertAdjacentHTML('beforeend',`<div class="bigstamp ${act==='A'?'a':'r'}">${act==='A'?'APPROVED':'REJECTED'}</div>`);
+  if(q.type==='multientry'&&c.mode!=='mc'&&!c.ok) document.querySelectorAll('.fl')[c.mut].classList.add('bad');
+  $('.paper').insertAdjacentHTML('beforeend',`<div class="bigstamp ${act==='R'?'r':'a'}">${act==='A'?'APPROVED':act==='R'?'REJECTED':'SIGNED'}</div>`);
   sfx('stamp'); setTimeout(()=>sfx(good?'ok':'bad'),200); const pt=$('#pt'); if(pt) pt.classList.add('leave');
   document.querySelectorAll('#act button').forEach(b=>b.disabled=true); $('#rej').innerHTML='';
   $('#verdict').innerHTML=`<div class="card"><span class="stamp ${good?'ok':'ko'}">${label}</span><p class="quote">“${react}” <span class="mu">— ${c.client}</span></p><p>${msg}</p><p><b>Correct:</b> ${correctText(c)}</p><p class="mu">${q.explain} · ${q.ref}</p><button onclick="D.i++;deskCase()">Next client →</button></div>`;
@@ -888,14 +916,152 @@ function deskEnd(){
   clearInterval(CK);
   const n=D.q.length, pct=D.ok/n, pass=pct>=0.6, avg=D.times.reduce((a,b)=>a+b,0)/n;
   const d=store.get(); d.career=d.career||{}; const un=d.career[D.t.key]||1;
-  if(pass) d.career[D.t.key]=Math.min(D.t.days.length,Math.max(un,D.di+2)); store.set(d);
+  if(pass) d.career[D.t.key]=Math.min(D.t.days.length,Math.max(un,D.di+2));
+  const promo=pass&&D.t.key==='book'&&D.di===D.t.days.length-1&&!d.career.promoted; if(promo) d.career.promoted=true; store.set(d);
   const miss=[...new Map(D.miss.map(q=>[q.concept,q])).values()];
   const mm=Math.floor(avg/60)+':'+String(Math.round(avg%60)).padStart(2,'0');
   const more=pass&&D.di+1<D.t.days.length;
   $('#app').innerHTML=`<h1>Day ${D.di+1} report</h1><div class="paper"><span class="stamp ${pass?'ok':'ko'}">${pass?'PASSED':'WRITTEN WARNING'}</span>
    <p>Correct decisions: <b>${D.ok}/${n}</b> (${Math.round(pct*100)}%) · Earnings: <b>€${D.cash}</b> · Average time per case: <b>${mm}</b> (exam pace 3:00)</p>
    ${miss.length?`<b>Review before tomorrow:</b><ul>${miss.map(q=>`<li>${q.concept} — <span class="mu">${q.ref}</span></li>`).join('')}</ul>`:'<p>Clean day. No citations.</p>'}</div>
-   <p>${more?`<button onclick="deskStart('${D.t.key}',${D.di+1})">Next day →</button> `:''}<button class="sec" onclick="deskStart('${D.t.key}',${D.di})">Retry day</button> <button class="sec" onclick="home()">Back to menu</button></p>`;
+   ${promo?'<div class="paper" style="margin-top:10px"><span class="stamp ok">PROMOTED</span><p>You are now a <b>Senior Accountant</b>. The Financial Statements track is unlocked.</p></div>':''}<p>${more?`<button onclick="${D.work?'workStart':'deskStart'}('${D.t.key}',${D.di+1})">Next day →</button> `:''}<button class="sec" onclick="${D.work?'workStart':'deskStart'}('${D.t.key}',${D.di})">Retry day</button> <button class="sec" onclick="home()">Back to menu</button></p>`;
+}
+
+/* ===== MULTIPLE-CHOICE RULINGS ===== */
+function wrongNums(q,k){
+  const a=q.answer, int=Number.isInteger(a), tol=Math.max(tolOf(q),0.4)*1.0001;
+  const cand=int?[a+1,a-1,a*2,Math.round(a/2),Math.round(a*1.25),Math.round(a*0.75),-a,a+10,a-10,a*3,a+5]
+    :[a*1.25,a*0.8,a*1.5,a+1,-a,a*2,a/2,a-1].map(v=>Math.round(v*100)/100);
+  const out=[]; shuffle(cand).forEach(v=>{ if(out.length<k&&Math.abs(v-a)>tol&&!out.some(o=>Math.abs(o-v)<=tol)) out.push(v); });
+  return out;
+}
+function mcEntries(q){
+  const sig=ls=>ls.map(l=>l.a+l.s+l.v).sort().join('|'), seen=new Set([sig(q.lines)]), out=[{lines:q.lines.map(l=>({...l})),ok:true}];
+  for(let n=0;n<120&&out.length<4;n++){ const ls=q.lines.map(l=>({...l})); mutate(ls,Math.floor(Math.random()*ls.length)); const s=sig(ls); if(!seen.has(s)){ seen.add(s); out.push({lines:ls,ok:false}); } }
+  return shuffle(out);
+}
+function entryTbl(ls){ return `<table class="mini">${ls.map(l=>`<tr><td style="padding-left:${l.s==='C'?24:4}px">${l.a}</td><td class="n">${l.s==='D'?f(l.v):''}</td><td class="n">${l.s==='C'?f(l.v):''}</td></tr>`).join('')}</table>`; }
+function scene(c){ const [b,r]=c.q.biz.text.split('¦'); return c.mode==='mc'?(r===undefined?b:b+' Which entry is correct?'):b+(r||''); }
+function mcHtml(c){ const q=c.q; return c.opts.map((o,i)=>`<label class="opt"><input type="radio" name="mc" value="${i}"> ${q.type==='multientry'?entryTbl(o.lines):o.t}</label>`).join(''); }
+function signMC(){ if(D.dec) return; const r=document.querySelector('input[name=mc]:checked'); if(!r) return;
+  const c=D.q[D.i], o=c.opts[+r.value];
+  settle(o.ok,o.ok?'Right call. The client follows your ruling.':'Wrong call. The client followed your ruling.','M'); }
+
+/* ===== WORK DESK: bookkeeper and senior accountant ===== */
+const WA={'Cash':'A','Accounts Receivable':'A','Supplies':'A','Prepaid Insurance':'A','Prepaid Rent':'A','Equipment':'A','Accumulated Depreciation':'XA',
+ 'Accounts Payable':'L','Salaries Payable':'L','Interest Payable':'L','Notes Payable':'L','Unearned Service Revenue':'L',
+ 'Share Capital':'E','Retained Earnings':'E','Dividends':'D','Service Revenue':'R','Salaries Expense':'X','Rent Expense':'X','Supplies Expense':'X',
+ 'Insurance Expense':'X','Depreciation Expense':'X','Interest Expense':'X','Utilities Expense':'X'};
+const sideOf=a=>['A','X','D'].includes(WA[a])?'D':'C';
+const CATS={A:'Balance sheet · asset',XA:'Balance sheet · asset',L:'Balance sheet · liability',E:'Balance sheet · equity',D:'Statement of retained earnings',R:'Income statement · revenue',X:'Income statement · expense'};
+const CATLIST=[...new Set(Object.values(CATS))];
+const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const WCLI=[['Mara Ellis','owner, Ellis Café'],['Jonas Pruitt','founder, Pruitt Bikes'],['Aylin Demir','owner, Demir Tailoring'],['Felix Wagner','manager, Wagner Print Shop'],['Noor Hassan','founder, Hassan Tutoring'],['Lotte Smit','owner, Smit Florals'],['Diego Alvarez','owner, Alvarez Auto Repair'],['Ingrid Moe','director, Moe Design Studio']];
+const JE={
+ cap:()=>{const x=ri(2,12)*5000;return {text:`I put €${f(x)} of my own savings into the company and received shares in return.`,lines:[{a:'Cash',s:'D',v:x},{a:'Share Capital',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Issuing shares for cash raises an asset (Dr Cash) and equity (Cr Share Capital).'};},
+ buyEqCash:()=>{const x=ri(3,15)*1000;return {text:`We bought a new machine for €${f(x)} and paid cash today.`,lines:[{a:'Equipment',s:'D',v:x},{a:'Cash',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'One asset replaces another: Dr Equipment, Cr Cash.'};},
+ buyEqPart:()=>{const x=ri(4,20)*1000,a=ri(1,3)*1000;return {text:`We bought equipment for €${f(x)}. We paid €${f(a)} in cash and will pay the rest to the supplier within 30 days.`,lines:[{a:'Equipment',s:'D',v:x},{a:'Cash',s:'C',v:a},{a:'Accounts Payable',s:'C',v:x-a}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Equipment is debited for its full cost; cash paid and the unpaid balance (Accounts Payable) are credited.'};},
+ suppliesCredit:()=>{const x=ri(2,12)*100;return {text:`We received €${f(x)} of office supplies today. The invoice is due next month.`,lines:[{a:'Supplies',s:'D',v:x},{a:'Accounts Payable',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Supplies are an asset until used; unpaid invoices are Accounts Payable.'};},
+ revCash:()=>{const x=ri(3,20)*100;return {text:`We finished a job and the customer paid €${f(x)} on the spot.`,lines:[{a:'Cash',s:'D',v:x},{a:'Service Revenue',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Revenue is recognised when earned: Dr Cash, Cr Service Revenue.'};},
+ revCredit:()=>{const x=ri(3,20)*100;return {text:`We finished a job worth €${f(x)}. The customer will pay us next month.`,lines:[{a:'Accounts Receivable',s:'D',v:x},{a:'Service Revenue',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Revenue is earned now even though cash comes later: Dr Accounts Receivable, Cr Service Revenue.'};},
+ payRent:()=>{const x=ri(5,30)*100;return {text:`We paid this month's rent of €${f(x)} in cash.`,lines:[{a:'Rent Expense',s:'D',v:x},{a:'Cash',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Rent used up this month is an expense: Dr Rent Expense, Cr Cash.'};},
+ insurance:()=>{const x=ri(1,6)*1200;return {text:`We paid €${f(x)} today for a 12-month insurance policy that starts now.`,lines:[{a:'Prepaid Insurance',s:'D',v:x},{a:'Cash',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Paying in advance creates an asset (Prepaid Insurance), not an expense yet.'};},
+ collect:()=>{const x=ri(2,15)*100;return {text:`A customer paid the €${f(x)} invoice we sent last month.`,lines:[{a:'Cash',s:'D',v:x},{a:'Accounts Receivable',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Collecting a receivable swaps assets. The revenue was already recorded: Dr Cash, Cr Accounts Receivable.'};},
+ paySupplier:()=>{const x=ri(2,15)*100;return {text:`We paid €${f(x)} to the supplier we owed from last month.`,lines:[{a:'Accounts Payable',s:'D',v:x},{a:'Cash',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Paying a payable reduces the liability and cash: Dr Accounts Payable, Cr Cash.'};},
+ paySalaries:()=>{const x=ri(10,40)*100;return {text:`Payday: we paid our staff €${f(x)} in cash.`,lines:[{a:'Salaries Expense',s:'D',v:x},{a:'Cash',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Wages for work already done are an expense: Dr Salaries Expense, Cr Cash.'};},
+ dividend:()=>{const x=ri(1,8)*500;return {text:`The owners took €${f(x)} out of the company as a dividend, paid in cash.`,lines:[{a:'Dividends',s:'D',v:x},{a:'Cash',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Dividends are a distribution of profit, not an expense: Dr Dividends, Cr Cash.'};},
+ loan:()=>{const x=ri(2,10)*5000;return {text:`The bank lent us €${f(x)} today on a promissory note.`,lines:[{a:'Cash',s:'D',v:x},{a:'Notes Payable',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Borrowing raises cash and creates a liability: Dr Cash, Cr Notes Payable.'};},
+ advance:()=>{const x=ri(2,12)*300;return {text:`A customer paid €${f(x)} in advance for work we will do next month.`,lines:[{a:'Cash',s:'D',v:x},{a:'Unearned Service Revenue',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Cash received before the work is done is a liability: Cr Unearned Service Revenue.'};},
+ utilities:()=>{const x=ri(2,12)*50;return {text:`We paid the €${f(x)} electricity bill for this month.`,lines:[{a:'Utilities Expense',s:'D',v:x},{a:'Cash',s:'C',v:x}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'Dr Utilities Expense, Cr Cash.'};},
+ revSplit:()=>{const a=ri(2,9)*100,b=ri(2,9)*100;return {text:`We completed a project worth €${f(a+b)}. The client paid €${f(a)} now and will pay the other €${f(b)} later.`,lines:[{a:'Cash',s:'D',v:a},{a:'Accounts Receivable',s:'D',v:b},{a:'Service Revenue',s:'C',v:a+b}],c:'Recording transactions',ref:'Weygandt Ch.2',why:'A compound entry: full revenue is credited; cash received and the receivable are both debited.'};},
+ depr:()=>{const k=ri(1,5),life=pick([3,4,6]),cost=12000*k,x=cost/life;return {text:`We own equipment that cost €${f(cost)}, with a ${life}-year life and no residual value. Straight-line. Record this year's depreciation.`,lines:[{a:'Depreciation Expense',s:'D',v:x},{a:'Accumulated Depreciation',s:'C',v:x}],c:'Adjusting entries',ref:'Weygandt Ch.3',why:`€${f(cost)} / ${life} years = €${f(x)}. Dr Depreciation Expense, Cr Accumulated Depreciation (a contra-asset).`};},
+ accrSal:()=>{const n=ri(2,4),d=ri(2,8)*50,x=n*d;return {text:`Our staff earns €${f(d)} per day in total. They worked the last ${n} days of December, but we pay them in January. Adjust the books at Dec 31.`,lines:[{a:'Salaries Expense',s:'D',v:x},{a:'Salaries Payable',s:'C',v:x}],c:'Adjusting entries',ref:'Weygandt Ch.3',why:`${n} days × €${f(d)} = €${f(x)} accrued: Dr Salaries Expense, Cr Salaries Payable.`};},
+ prepaidExp:()=>{const k=ri(1,5),p=4800*k,x=p*3/12;return {text:`On Oct 1 we paid €${f(p)} for a 12-month insurance policy (booked to Prepaid Insurance). It is now Dec 31. Adjust the books.`,lines:[{a:'Insurance Expense',s:'D',v:x},{a:'Prepaid Insurance',s:'C',v:x}],c:'Adjusting entries',ref:'Weygandt Ch.3',why:`3 of 12 months have expired: €${f(p)} × 3/12 = €${f(x)}. Dr Insurance Expense, Cr Prepaid Insurance.`};},
+ earned:()=>{const k=ri(1,5),t=9000*k,x=t*2/6;return {text:`On Nov 1 a customer paid €${f(t)} in advance for a 6-month service contract (booked to Unearned Service Revenue). At Dec 31, 2 months have been earned. Adjust the books.`,lines:[{a:'Unearned Service Revenue',s:'D',v:x},{a:'Service Revenue',s:'C',v:x}],c:'Adjusting entries',ref:'Weygandt Ch.3',why:`€${f(t)} × 2/6 = €${f(x)} is now earned: Dr Unearned Service Revenue, Cr Service Revenue.`};},
+ suppUsed:()=>{const a=ri(20,50)*100,b=ri(5,15)*100,x=a-b;return {text:`Our ledger shows €${f(a)} of supplies on hand. A count at Dec 31 shows only €${f(b)} left. Adjust the books.`,lines:[{a:'Supplies Expense',s:'D',v:x},{a:'Supplies',s:'C',v:x}],c:'Adjusting entries',ref:'Weygandt Ch.3',why:`Used = €${f(a)} − €${f(b)} = €${f(x)}: Dr Supplies Expense, Cr Supplies.`};},
+ accrInt:()=>{const k=ri(1,4),p=12000*k,r=pick([6,9,12]),m=ri(1,4),x=10*k*r*m;return {text:`We borrowed €${f(p)} at ${r}% annual interest. ${m} month${m>1?'s':''} of interest has built up and is not yet paid. Adjust the books.`,lines:[{a:'Interest Expense',s:'D',v:x},{a:'Interest Payable',s:'C',v:x}],c:'Adjusting entries',ref:'Weygandt Ch.3',why:`€${f(p)} × ${r}% × ${m}/12 = €${f(x)}: Dr Interest Expense, Cr Interest Payable.`};}
+};
+const JE1=['cap','buyEqCash','buyEqPart','suppliesCredit','revCash','revCredit','payRent','insurance'];
+const JE2=['collect','paySupplier','paySalaries','dividend','loan','advance','utilities','revSplit'];
+const JE3=['depr','accrSal','prepaidExp','earned','suppUsed','accrInt'];
+function wcl(){ const c=pick(WCLI); return {client:c[0],role:c[1]}; }
+function mkJE(ids){ return ids.map(id=>{ const g=JE[id](); return {kind:'je',...wcl(),text:g.text,lines:g.lines,concept:g.c,ref:g.ref,why:g.why,id}; }); }
+function genTB(){
+  for(;;){
+    const R=[['Cash',ri(6,25)*1000],['Accounts Receivable',ri(3,12)*1000],['Supplies',ri(1,4)*500],['Equipment',ri(3,8)*10000],
+      ['Dividends',ri(1,4)*1000],['Salaries Expense',ri(8,25)*1000],['Rent Expense',ri(2,6)*1000],['Utilities Expense',ri(1,3)*500],
+      ['Accumulated Depreciation',ri(1,3)*5000],['Accounts Payable',ri(2,9)*1000],['Notes Payable',ri(1,3)*10000],['Share Capital',ri(2,6)*10000],['Service Revenue',ri(40,90)*1000]];
+    const rows=R.map(([a,v])=>({a,v,s:sideOf(a)}));
+    const dr=rows.filter(r=>r.s==='D').reduce((x,r)=>x+r.v,0), cr=rows.filter(r=>r.s==='C').reduce((x,r)=>x+r.v,0), re=dr-cr;
+    if(re>=3000){ rows.push({a:'Retained Earnings',v:re,s:'C'}); return {rows:shuffle(rows),dr}; }
+  }
+}
+function tbView(rows,hide){ return `<table class="tb"><thead><tr><th>Account</th><th class="n">Debit</th><th class="n">Credit</th></tr></thead><tbody>${rows.map(r=>r===hide?`<tr><td>${r.a}</td><td class="n">${r.s==='D'?'?':''}</td><td class="n">${r.s==='C'?'?':''}</td></tr>`:`<tr><td>${r.a}</td><td class="n">${r.s==='D'?f(r.v):''}</td><td class="n">${r.s==='C'?f(r.v):''}</td></tr>`).join('')}</tbody></table>`; }
+function stm(rows){ const g=t=>rows.filter(r=>WA[r.a]===t).reduce((x,r)=>x+r.v,0), v=a=>(rows.find(r=>r.a===a)||{v:0}).v;
+  const rev=g('R'), exp=g('X'), ni=rev-exp, re=v('Retained Earnings'), div=v('Dividends'), end=re+ni-div;
+  const ta=g('A')-g('XA'), tl=g('L'), te=v('Share Capital')+end; return {rev,exp,ni,end,ta,tl,te}; }
+function mkTB(kind){ const t=genTB(), w=wcl();
+  if(kind==='tb1') return {kind,...w,text:`These are my ledger balances at year end. I need a trial balance: which side does each account belong on, and what do the debits add up to?`,rows:t.rows,total:t.dr,concept:'Trial balance',ref:'Weygandt Ch.2',why:'Assets, expenses and dividends have normal debit balances; liabilities, equity, revenue and accumulated depreciation have normal credit balances. Total debits must equal total credits.'};
+  const cand=t.rows.filter(r=>r.a!=='Retained Earnings'||true), hid=pick(cand);
+  return {kind:'tb2',...w,text:`My trial balance does not balance because one amount got lost. Which amount is missing?`,rows:t.rows,hid,concept:'Trial balance',ref:'Weygandt Ch.2',why:'Total debits must equal total credits, so the missing amount is the difference between the two columns.'}; }
+function mkIS(){ const t=genTB(), w=wcl(); return {kind:'is',...w,text:`Here is my trial balance. Prepare my income statement figures: total revenues, total expenses and net income.`,rows:t.rows,ans:stm(t.rows),concept:'Income statement',ref:'Weygandt Ch.1, 4',why:'Only revenue and expense accounts go on the income statement. Dividends and balance sheet accounts do not. Net income = revenues − expenses.'}; }
+function mkBS(){ const t=genTB(), w=wcl(); return {kind:'bs',...w,text:`Here is my trial balance. I need the figures for my statement of retained earnings and balance sheet.`,rows:t.rows,ans:stm(t.rows),concept:'Balance sheet',ref:'Weygandt Ch.1, 4',why:'Ending retained earnings = beginning RE + net income − dividends. Assets are shown net of accumulated depreciation. Check: assets = liabilities + equity.'}; }
+function mkCLS(){ const w=wcl(), as=shuffle(Object.keys(WA)).slice(0,6); return {kind:'cls',...w,text:`My new bookkeeper is confused. Where does each of these accounts appear in the financial statements?`,accs:as,concept:'Financial statements',ref:'Weygandt Ch.1, 4',why:'Revenues and expenses go to the income statement; dividends to the statement of retained earnings; assets (including contra-assets), liabilities, share capital and retained earnings to the balance sheet.'}; }
+const inp=(id,l)=>`<p><label>${l} € <input type="number" step="any" id="${id}" style="width:130px"></label></p>`;
+const nv=id=>{const e=document.getElementById(id); return e&&e.value!==''?+e.value:null;};
+const WT={
+ je:{ui:t=>`<datalist id="accl">${accNames().map(a=>`<option value="${a}">`).join('')}</datalist><table><thead><tr><th>Account (pick from the list)</th><th class="n">Debit</th><th class="n">Credit</th></tr></thead><tbody id="rows">${Array.from({length:Math.min(6,t.lines.length+2)},()=>rowHtml()).join('')}</tbody></table><button class="sec" onclick="addRow()">+ line</button>`,
+  grade:t=>{ const got={},exp={}; document.querySelectorAll('#rows tr').forEach(tr=>{ const [a,d,c]=tr.querySelectorAll('input'),k=norm(a.value); if(!k) return; if(+d.value>0) got[k+'|D']=(got[k+'|D']||0)+ +d.value; if(+c.value>0) got[k+'|C']=(got[k+'|C']||0)+ +c.value; });
+    t.lines.forEach(l=>{ const k=norm(l.a)+'|'+l.s; exp[k]=(exp[k]||0)+l.v; }); if(!Object.keys(got).length) return null;
+    return {ok:[...new Set([...Object.keys(got),...Object.keys(exp)])].every(k=>Math.abs((got[k]||0)-(exp[k]||0))<0.5)}; },
+  ans:t=>entryTbl(t.lines)},
+ tb1:{ui:t=>`<table class="tb"><thead><tr><th>Account</th><th class="n">Balance</th><th>Dr</th><th>Cr</th></tr></thead><tbody>${t.rows.map((r,i)=>`<tr><td>${r.a}</td><td class="n">${f(r.v)}</td><td><input type="radio" name="s${i}" value="D"></td><td><input type="radio" name="s${i}" value="C"></td></tr>`).join('')}</tbody></table>${inp('w1','Total debits')}`,
+  grade:t=>{ let ok=true; for(let i=0;i<t.rows.length;i++){ const r=document.querySelector(`input[name=s${i}]:checked`); if(!r) return null; if(r.value!==t.rows[i].s) ok=false; }
+    const v=nv('w1'); if(v===null) return null; return {ok:ok&&Math.abs(v-t.total)<0.5}; },
+  ans:t=>tbView(t.rows)+`<p>Total debits = total credits = <b>€${f(t.total)}</b></p>`},
+ tb2:{ui:t=>tbView(t.rows,t.hid)+inp('w1',`Missing amount (${t.hid.a}, ${t.hid.s==='D'?'debit':'credit'} column)`),
+  grade:t=>{ const v=nv('w1'); return v===null?null:{ok:Math.abs(v-t.hid.v)<0.5}; },
+  ans:t=>`<b>${t.hid.a}: €${f(t.hid.v)}</b>`},
+ cls:{ui:t=>`<table class="tb"><tbody>${t.accs.map((a,i)=>`<tr><td>${a}</td><td><select id="c${i}"><option value="">—</option>${CATLIST.map(c=>`<option>${c}</option>`).join('')}</select></td></tr>`).join('')}</tbody></table>`,
+  grade:t=>{ let ok=true; for(let i=0;i<t.accs.length;i++){ const v=document.getElementById('c'+i).value; if(!v) return null; if(v!==CATS[WA[t.accs[i]]]) ok=false; } return {ok}; },
+  ans:t=>`<table class="mini">${t.accs.map(a=>`<tr><td>${a}</td><td>${CATS[WA[a]]}</td></tr>`).join('')}</table>`},
+ is:{ui:t=>tbView(t.rows)+inp('w1','Total revenues')+inp('w2','Total expenses')+inp('w3','Net income'),
+  grade:t=>{ const a=[1,2,3].map(i=>nv('w'+i)); if(a.includes(null)) return null; const s=t.ans; return {ok:Math.abs(a[0]-s.rev)<0.5&&Math.abs(a[1]-s.exp)<0.5&&Math.abs(a[2]-s.ni)<0.5}; },
+  ans:t=>`Revenues <b>€${f(t.ans.rev)}</b> · Expenses <b>€${f(t.ans.exp)}</b> · Net income <b>€${f(t.ans.ni)}</b>`},
+ bs:{ui:t=>tbView(t.rows)+inp('w1','Net income')+inp('w2','Ending retained earnings')+inp('w3','Total assets (net)')+inp('w4','Total liabilities')+inp('w5','Total equity'),
+  grade:t=>{ const a=[1,2,3,4,5].map(i=>nv('w'+i)); if(a.includes(null)) return null; const s=t.ans; return {ok:[s.ni,s.end,s.ta,s.tl,s.te].every((x,i)=>Math.abs(a[i]-x)<0.5)}; },
+  ans:t=>`Net income <b>€${f(t.ans.ni)}</b> · Ending RE <b>€${f(t.ans.end)}</b> · Assets <b>€${f(t.ans.ta)}</b> · Liabilities <b>€${f(t.ans.tl)}</b> · Equity <b>€${f(t.ans.te)}</b> (A = L + E)`}
+};
+function workStart(key,di){
+  const t=TRACKS.find(x=>x.key===key), day=t.days[di];
+  D={t,di,day,work:true,q:day.gen(),i:0,cash:0,warn:2,ok:0,miss:[],times:[],t0:0,showNew:true};
+  $('#app').innerHTML=`<div class="row"><button class="sec" onclick="home()">← Exit</button><span class="mu">${t.name}</span></div>
+   <div class="paper" style="margin:12px 0"><canvas class="pt boss" data-seed="boss-${key}-${di}"></canvas><h1>Day ${di+1}: ${day.name}</h1><p><i>Memo from your manager:</i> ${day.memo}</p>
+   <p><b>${D.q.length} jobs today.</b> +€50 per correct job. The first 2 mistakes are free warnings; after that, −€75 per citation. You need 60% to move on.</p></div>
+   ${rulesHtml()}<p><button onclick="D.showNew=false;workCase()">Open the office</button></p>`;
+  drawPortraits(); sfx('bell');
+}
+function workCase(){
+  if(D.i>=D.q.length) return deskEnd();
+  const t=D.q[D.i]; D.t0=Date.now(); D.dec=false;
+  $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>JOB ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
+  <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${t.client}"></canvas><div class="counter"><div class="plate">${t.client.toUpperCase()}</div></div></div>
+  <div class="desktop"><div class="grid2"><div class="paper"><div class="mu">${t.client.toUpperCase()} · ${t.role.toUpperCase()}</div><p class="scene">“${t.text}”</p>${WT[t.kind].ui(t)}</div>${rulesHtml()}</div></div>
+  <p id="wact"><button class="appr" onclick="workSubmit()">✔ FILE IT</button></p><div id="verdict"></div>`;
+  drawPortraits(); sfx('bell'); clearInterval(CK); CK=setInterval(tick,1000); tick();
+}
+function workSubmit(){
+  if(D.dec) return; const t=D.q[D.i], r=WT[t.kind].grade(t);
+  if(!r){ $('#verdict').innerHTML='<div class="card"><b>Complete the job first.</b></div>'; return; }
+  D.dec=true; clearInterval(CK); D.times.push((Date.now()-D.t0)/1000); let label;
+  if(r.ok){ D.cash+=50; D.ok++; label='CORRECT +€50'; }
+  else { D.miss.push(t); if(D.warn>0){ D.warn--; label='WARNING (free)'; } else { D.cash-=75; label='CITATION −€75'; } }
+  $('#cash').textContent='€'+D.cash; $('#warn').textContent='WARN '+'■'.repeat(D.warn)+'□'.repeat(2-D.warn);
+  sfx('stamp'); setTimeout(()=>sfx(r.ok?'ok':'bad'),200); const pt=$('#pt'); if(pt) pt.classList.add('leave');
+  document.querySelectorAll('#wact button').forEach(b=>b.disabled=true);
+  const react=r.ok?'The books are clean. Thank you.':'That will not match our records. We need to redo it.';
+  $('#verdict').innerHTML=`<div class="card"><span class="stamp ${r.ok?'ok':'ko'}">${label}</span><p class="quote">“${react}” <span class="mu">— ${t.client}</span></p>${r.ok?'':`<p><b>Correct:</b></p>${WT[t.kind].ans(t)}`}<p class="mu">${t.why} · ${t.ref}</p><button onclick="D.i++;workCase()">Next job →</button></div>`;
+  $('#verdict').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 home();
