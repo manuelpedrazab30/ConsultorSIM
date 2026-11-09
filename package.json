@@ -1,0 +1,6 @@
+{
+  "name": "consultor-u",
+  "private": true,
+  "scripts": { "test": "for t in t2 t3 t4 t5 t6; do node tests/$t.js | tail -1; done" },
+  "devDependencies": { "jsdom": "^24.0.0" }
+}
