@@ -96,6 +96,15 @@ canvas.pad{width:100%;height:170px;display:block;background:#fbf7ec repeating-li
 .padwrap.big{position:fixed;inset:0;z-index:50;background:#d9d2b6;padding:12px;margin:0;display:flex;flex-direction:column}.padwrap.big canvas.pad{flex:1;height:auto}
 .thumbs{display:flex;gap:10px;flex-wrap:wrap}.thumbs figure{margin:0;width:160px}.thumbs img{width:100%;border:2px solid #14130f}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+#app.wide{max-width:none;padding:12px 28px 40px}
+#app.wide .grid2{grid-template-columns:minmax(0,1.45fr) minmax(340px,1fr);gap:16px}
+#app.wide .booth{height:230px}
+#app.wide .side{position:sticky;top:8px;display:flex;flex-direction:column;gap:10px}
+#app.wide .side .padwrap{margin:0}
+#app.wide canvas.pad{height:min(46vh,420px)}
+#app.wide .scene{font-size:26px}
+.side .rules{margin:0}
+@media(max-width:900px){#app.wide{padding:10px}#app.wide .grid2{grid-template-columns:1fr}#app.wide .side{position:static}#app.wide canvas.pad{height:200px}}
 </style>
 </head>
 <body>
@@ -522,7 +531,9 @@ const $ = s=>document.querySelector(s);
 const f = n => Number.isInteger(n)?n.toLocaleString('en-US'):(Math.round(n*100)/100).toLocaleString('en-US');
 
 /* ============ VISTAS ============ */
+const W=on=>{ const a=document.getElementById('app'); if(a) a.classList.toggle('wide',on); };
 function home(){
+  W(false);
   S.case=null; clearInterval(CK);
   const st=store.get();
   const days=Math.max(0,Math.ceil((new Date(EXAM)-new Date())/864e5));
@@ -575,6 +586,7 @@ function addRow(){ $('#rows').insertAdjacentHTML('beforeend',rowHtml()); }
 function accNames(){ return [...new Set([...Object.keys(ACC),...Object.keys(WA),...QBANK.flatMap(q=>(q.lines||[]).map(l=>l.a))])].sort(); }
 
 function step(){
+  W(false);
   const c=S.case, st=c.steps[S.i];
   S.done=false; S.tries=0; S.val=st.type==='slider'?st.init:null;
   let h=`<div class="row"><button class="sec" onclick="home()">← Cases</button><span class="mu">${c.title} · step ${S.i+1}/${c.steps.length} · points ${f(S.score)}</span></div>`;
@@ -856,6 +868,7 @@ function rulesHtml(){
 }
 
 function deskStart(key,di){
+  W(true);
   const t=TRACKS.find(x=>x.key===key), day=t.days[di];
   D={t,di,day,q:buildQueue(t,di),i:0,cash:0,warn:2,ok:0,miss:[],times:[],t0:0,showNew:true};
   $('#app').innerHTML=`<div class="row"><button class="sec" onclick="home()">← Exit</button><span class="mu">${t.name}</span></div>
@@ -866,6 +879,7 @@ function deskStart(key,di){
 }
 
 function deskCase(){
+  W(true);
   if(D.i>=D.q.length) return deskEnd();
   if(D.q[D.i].kind) return workCase();
   const c=D.q[D.i], q=c.q; D.t0=Date.now(); D.dec=false; D.pick=null; D.picking=false;
@@ -876,10 +890,10 @@ function deskCase(){
   else if(!mc) claim=`<table id="ft"><tr><th>Account</th><th class="n">Debit</th><th class="n">Credit</th></tr>${c.lines.map((l,i)=>`<tr class="fl" onclick="pickLine(${i})"><td style="padding-left:${l.s==='C'?28:8}px">${l.a}</td><td class="n">${l.s==='D'?f(l.v):''}</td><td class="n">${l.s==='C'?f(l.v):''}</td></tr>`).join('')}</table>`;
   $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>CASE ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
   <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${c.client}"></canvas><div class="counter"><div class="plate">${c.client.toUpperCase()}</div></div></div>
-  <div class="desktop"><div class="grid2"><div class="paper"><div class="mu">${c.client.toUpperCase()} · ${q.biz.role.toUpperCase()}</div><p class="scene">“${scene(c)}”</p>
+  <div class="desktop"><div class="grid2"><div class="main"><div class="paper"><div class="mu">${c.client.toUpperCase()} · ${q.biz.role.toUpperCase()}</div><p class="scene">“${scene(c)}”</p>
    <details class="tech"><summary>Technical brief (exam wording)</summary>${q.question}</details>
-   ${mc?`<div class="mu">YOUR RULING</div>${mcHtml(c)}`:`<div class="mu">${q.type==='multientry'?'ENTRY POSTED BY THEIR BOOKKEEPER':q.type==='choice'?'THEIR POSITION':'THEIR PROPOSAL'}</div>${claim}`}${padHtml()}</div>${rulesHtml()}</div></div>
-  <p id="act">${mc?'<button class="appr" onclick="signMC()">✔ SIGN OFF ON SELECTED</button>':'<button class="appr" onclick="approve()">✔ APPROVE</button> <button class="rej" onclick="openReject()">✘ REJECT</button>'}</p><div id="rej"></div><div id="verdict"></div>`;
+   ${mc?`<div class="mu">YOUR RULING</div>${mcHtml(c)}`:`<div class="mu">${q.type==='multientry'?'ENTRY POSTED BY THEIR BOOKKEEPER':q.type==='choice'?'THEIR POSITION':'THEIR PROPOSAL'}</div>${claim}`}</div>
+  <p id="act">${mc?'<button class="appr" onclick="signMC()">✔ SIGN OFF ON SELECTED</button>':'<button class="appr" onclick="approve()">✔ APPROVE</button> <button class="rej" onclick="openReject()">✘ REJECT</button>'}</p><div id="rej"></div><div id="verdict"></div></div><div class="side">${rulesHtml()}${padHtml()}</div></div></div>`;
   drawPortraits(); sfx('bell'); initPad();
   clearInterval(CK); CK=setInterval(tick,1000); tick();
 }
@@ -924,6 +938,7 @@ function settle(good,msg,act){
   $('#verdict').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function deskEnd(){
+  W(true);
   clearInterval(CK);
   if(D.free) return freeEnd();
   const n=D.q.length, pct=D.ok/n, pass=pct>=0.6, avg=D.times.reduce((a,b)=>a+b,0)/n;
@@ -1046,6 +1061,7 @@ const WT={
   ans:t=>`Net income <b>€${f(t.ans.ni)}</b> · Ending RE <b>€${f(t.ans.end)}</b> · Assets <b>€${f(t.ans.ta)}</b> · Liabilities <b>€${f(t.ans.tl)}</b> · Equity <b>€${f(t.ans.te)}</b> (A = L + E)`}
 };
 function workStart(key,di){
+  W(true);
   const t=TRACKS.find(x=>x.key===key), day=t.days[di];
   D={t,di,day,work:true,q:day.gen(),i:0,cash:0,warn:2,ok:0,miss:[],times:[],t0:0,showNew:true};
   $('#app').innerHTML=`<div class="row"><button class="sec" onclick="home()">← Exit</button><span class="mu">${t.name}</span></div>
@@ -1055,13 +1071,14 @@ function workStart(key,di){
   drawPortraits(); sfx('bell');
 }
 function workCase(){
+  W(true);
   if(D.i>=D.q.length) return deskEnd();
   if(D.q[D.i].q) return deskCase();
   const t=D.q[D.i]; D.t0=Date.now(); D.dec=false;
   $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>JOB ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
   <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${t.client}"></canvas><div class="counter"><div class="plate">${t.client.toUpperCase()}</div></div></div>
-  <div class="desktop"><div class="grid2"><div class="paper"><div class="mu">${t.client.toUpperCase()} · ${t.role.toUpperCase()}</div><p class="scene">“${t.text}”</p>${WT[t.kind].ui(t)}${padHtml()}</div>${rulesHtml()}</div></div>
-  <p id="wact"><button class="appr" onclick="workSubmit()">✔ FILE IT</button></p><div id="verdict"></div>`;
+  <div class="desktop"><div class="grid2"><div class="main"><div class="paper"><div class="mu">${t.client.toUpperCase()} · ${t.role.toUpperCase()}</div><p class="scene">“${t.text}”</p>${WT[t.kind].ui(t)}</div>
+  <p id="wact"><button class="appr" onclick="workSubmit()">✔ FILE IT</button></p><div id="verdict"></div></div><div class="side">${rulesHtml()}${padHtml()}</div></div></div>`;
   drawPortraits(); sfx('bell'); initPad(); clearInterval(CK); CK=setInterval(tick,1000); tick();
 }
 function workSubmit(){
@@ -1091,6 +1108,7 @@ function freeOpts(){
     acc:[...ac.map(k=>({v:'acc:'+k,t:RULES.acc[k][0],n:cnt(A,'acc',k)})),...Object.keys(WKT).map(k=>({v:'wk:'+k,t:WKT[k][0],n:'∞'}))]};
 }
 function freeSetup(){
+  W(true);
   const d=store.get(), last=d.free||{sel:[],n:10}, o=freeOpts();
   const col=(name,key)=>`<div class="card"><h3>${name}</h3><div style="margin-bottom:6px"><button class="sec" onclick="freeAll('${key}',true)">All</button> <button class="sec" onclick="freeAll('${key}',false)">None</button></div>${o[key].map(x=>`<label class="opt"><input type="checkbox" class="fc ${key}" value="${x.v}" ${last.sel.includes(x.v)?'checked':''}> ${x.t} <span class="mu">(${x.n})</span></label>`).join('')}</div>`;
   $('#app').innerHTML=`<div class="row"><button class="sec" onclick="home()">← Exit</button><span class="mu">Free mode</span></div><h2>Free mode</h2><p class="mu">Pick the chapters you want to practise. Clients come in random order from those chapters only. The number in brackets is how many hand-made cases the chapter has; bookkeeping topics generate new cases every time.</p>
@@ -1112,6 +1130,7 @@ function freeStart(sel,n){
   deskCase();
 }
 function freeEnd(){
+  W(true);
   const n=D.q.length, pct=D.ok/n, avg=D.times.reduce((a,b)=>a+b,0)/n, miss=[...new Map(D.miss.map(x=>[x.concept||x.q.concept,x.q||x])).values()];
   const mm=Math.floor(avg/60)+':'+String(Math.round(avg%60)).padStart(2,'0');
   $('#app').innerHTML=`<h1>Free session report</h1><div class="paper"><p>Correct: <b>${D.ok}/${n}</b> (${Math.round(pct*100)}%) · Earnings: <b>€${D.cash}</b> · Average time per case: <b>${mm}</b></p>
