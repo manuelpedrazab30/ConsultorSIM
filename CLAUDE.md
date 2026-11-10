@@ -18,6 +18,7 @@ Single-file pixel-art game (`index.html`, vanilla HTML/CSS/JS, no build) where M
 - Typed numbers: inputs are `type=text inputmode=decimal`; always read them with `pn()` (accepts comma decimals and thousands separators). `tolOf(q)` never goes below `TOL_MIN` = ±0.1.
 - Free mode: `freeSetup/freeStart/freeEnd` (pick chapters, mixed queue, `WKT` bookkeeping topics).
 - Scratch pad: canvas with Pointer Events (pen pressure, palm rejection, eraser, big board), thumbnails of missed cases in reports.
+- Calculator: `calcHtml/calcKey/calcEval/calcUse`, rendered inside the pad (under its toolbar, `▸ Calc` toggles, state in `CALC`, open flag in `localStorage` `consultoru_calc`). Own recursive-descent parser, no `eval`. `Use` copies the result into the last focused `inputmode=decimal` box. Tested in `tests/t7.js`.
 - Layout: `#app.wide` full width; `#app.fit` fits the viewport without page scroll (>900px). Under 900px it stacks and scrolls.
 - Pixel art: procedural portraits (`paint`, seeded), `sfx` WebAudio.
 
@@ -30,7 +31,7 @@ Single-file pixel-art game (`index.html`, vanilla HTML/CSS/JS, no build) where M
 - Exam facts: Econ 40 MC / 120 min (27 correct = 5.5); Accounting 30 MC + 4 open (25.5/40).
 
 ## Roadmap / decisions
-1. **Shop + persistent wallet** (agreed design): skills (Hint −1 wrong option €30; Calculator €300; extra warning €200; rulebook worked examples €150; review a missed question €50) and office decor by rank. Keep helps scarce so the real exam is not harder; lower pay on mastered chapters; time bonus for under 3:00.
+1. **Shop + persistent wallet** (agreed design): skills (Hint −1 wrong option €30; Calculator now free in the workspace — decide if it stays free; extra warning €200; rulebook worked examples €150; review a missed question €50) and office decor by rank. Keep helps scarce so the real exam is not harder; lower pay on mastered chapters; time bonus for under 3:00.
 2. More content (via NotebookLM, audited): Econ Ch.13, 14, 19, 26–27; Accounting Ch.8 and more on 10, 12, 14. Several chapters have only 1–5 cases.
 3. Idea: client sometimes states the price when the question asks for quantity (practice price vs quantity).
 4. Polish: portrait gender does not match client names; recurring clients/story; varied office decor per day.
