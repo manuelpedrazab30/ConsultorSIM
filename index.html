@@ -127,14 +127,13 @@ canvas.pad{width:100%;height:170px;display:block;background:#fbf7ec repeating-li
 /* ===== Calculator (workspace) ===== */
 .calc{background:#d8cfae;border:3px solid #14130f;padding:5px;margin-bottom:6px;flex:none}
 .calc[hidden]{display:none}
-.calc .cd{background:#b9c7a0;border:3px solid #14130f;padding:2px 8px;margin-bottom:6px;text-align:right;font-family:'VT323','Courier New',monospace;color:#14130f;min-height:46px;overflow:hidden}
-.calc .ce{font-size:17px;line-height:1.1;min-height:18px;white-space:nowrap;overflow-x:auto;direction:rtl}
-.calc .cr{font-size:28px;line-height:1}
+.calc .cd{display:flex;align-items:center;gap:8px;background:#b9c7a0;border:3px solid #14130f;padding:2px 8px;margin-bottom:5px;font-family:'VT323','Courier New',monospace;color:#14130f;height:42px;overflow:hidden}.calc .cl1{flex:1;min-width:0}.calc .cm{font-size:14px;line-height:1;color:#4c7a3a;min-height:14px}
+.calc .ce{font-size:17px;line-height:1.1;min-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:rtl;text-align:left}
+.calc .cr{font-size:30px;line-height:1;white-space:nowrap;text-align:right}
 .calc .cr.err{color:#a8352b}
-.calc .ck{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.calc .ck{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .calc .ck button{margin:0;padding:0;height:32px;font:700 17px/1 system-ui,-apple-system,sans-serif;box-shadow:0 2px 0 #14130f;border-width:2px;touch-action:manipulation;-webkit-user-select:none;user-select:none}
-.calc .ck .n{background:#efe9d0}.calc .ck .op{background:#55503f;color:#efe9d0}.calc .ck .eq{background:#4c7a3a;color:#fff}.calc .ck .cl{background:#a8352b;color:#fff}
-.calc .cu{display:flex;gap:6px;margin-top:5px;align-items:center}.calc .cu button{margin:0;padding:6px 10px;font-size:9px}.calc .cu .mu{font-size:16px;flex:1}
+.calc .ck .n{background:#efe9d0}.calc .ck .op{background:#55503f;color:#efe9d0}.calc .ck .eq{background:#4c7a3a;color:#fff}.calc .ck .cl{background:#a8352b;color:#fff}.calc .ck .use{background:#d9a441;font-size:14px}
 </style>
 </head>
 <body>
@@ -1465,15 +1464,13 @@ function freeEnd(){
    Own parser (no eval): + − × ÷ ^ % √ ( ) and Ans. State lives in CALC so it survives between cases. */
 const CALC={open:false,expr:'',ans:0,last:null,target:null};
 try{ CALC.open=localStorage.getItem('consultoru_calc')==='1'; }catch(_){}
-const CKEYS=[['C','cl'],['⌫','op'],['(','op'],[')','op'],['÷','op'],
- ['7','n'],['8','n'],['9','n'],['√','op'],['×','op'],
- ['4','n'],['5','n'],['6','n'],['x²','op'],['−','op'],
- ['1','n'],['2','n'],['3','n'],['%','op'],['+','op'],
- ['0','n'],['.','n'],['±','op'],['Ans','op'],['=','eq']];
+const CKEYS=[['7','n'],['8','n'],['9','n'],['÷','op'],['√','op'],['(','op'],[')','op'],
+ ['4','n'],['5','n'],['6','n'],['×','op'],['x²','op'],['%','op'],['⌫','op'],
+ ['1','n'],['2','n'],['3','n'],['−','op'],['±','op'],['Ans','op'],['C','cl'],
+ ['0','n'],['.','n'],['=','eq'],['+','op'],['↳ Use','use',3]];
 function calcHtml(){
-  return `<div class="calc" id="calc"${CALC.open?'':' hidden'}><div class="cd"><div class="ce" id="ce"></div><div class="cr" id="cr"></div></div>
-<div class="ck">${CKEYS.map(([k,c])=>`<button class="${c}" onclick="calcKey('${k}')">${k}</button>`).join('')}</div>
-<div class="cu"><button class="sec" onclick="calcUse()" id="cuse">↳ Use in answer</button><span class="mu" id="cmsg"></span></div></div>`;
+  return `<div class="calc" id="calc"${CALC.open?'':' hidden'}><div class="cd"><div class="cl1"><div class="ce" id="ce"></div><div class="cm" id="cmsg"></div></div><div class="cr" id="cr"></div></div>
+<div class="ck">${CKEYS.map(([k,c,sp])=>`<button class="${c}"${sp?` style="grid-column:span ${sp}"`:''} onclick="${c==='use'?'calcUse()':`calcKey('${k}')`}"${c==='use'?' title="Copy the result into the last answer box you tapped"':''}>${k}</button>`).join('')}</div></div>`;
 }
 function calcToggle(){
   CALC.open=!CALC.open; const c=document.getElementById('calc'); if(c) c.hidden=!CALC.open;
