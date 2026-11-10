@@ -31,7 +31,7 @@ Single-file pixel-art game (`index.html`, vanilla HTML/CSS/JS, no build) where M
 - Exam facts: Econ 40 MC / 120 min (27 correct = 5.5); Accounting 30 MC + 4 open (25.5/40).
 
 ## Roadmap / decisions
-1. **Shop + persistent wallet** (agreed design): skills (Hint −1 wrong option €30; Calculator now free in the workspace — decide if it stays free; extra warning €200; rulebook worked examples €150; review a missed question €50) and office decor by rank. Keep helps scarce so the real exam is not harder; lower pay on mastered chapters; time bonus for under 3:00.
+1. **Shop + persistent wallet** (agreed design): skills (Hint −1 wrong option €30; Calculator: free in the workspace (decided 2026-11-10, not a shop item); extra warning €200; rulebook worked examples €150; review a missed question €50) and office decor by rank. Keep helps scarce so the real exam is not harder; lower pay on mastered chapters; time bonus for under 3:00.
 2. More content (via NotebookLM, audited): Econ Ch.13, 14, 19, 26–27; Accounting Ch.8 and more on 10, 12, 14. Several chapters have only 1–5 cases.
 3. Idea: client sometimes states the price when the question asks for quantity (practice price vs quantity).
 4. Polish: portrait gender does not match client names; recurring clients/story; varied office decor per day.
