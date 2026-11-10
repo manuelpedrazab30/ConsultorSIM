@@ -12,7 +12,7 @@ Single-file pixel-art game (`index.html`, vanilla HTML/CSS/JS, no build) where M
 - Head: embedded fonts (base64 Press Start 2P, VT323), iPad/PWA meta, inline manifest and icon.
 - State: `localStorage` key `consultoru1` = `{m: mastery by concept, c: best scores, career: {unlocked days per track, promoted}, free: {sel, n}}`.
 - `QBANK` (125 vetted questions: 64 original + batch 1 from `batch1_questions.json`: `numeric` / `choice` / `multientry`) + `BIZ` (same order, one entry each: `[who, role, text, say]`). `text` may contain `¦` splitting a neutral ask from a review-only suffix. Every number in a question must appear in its `BIZ` text (tested).
-- `CASES` (4 old hand-made guided cases; **not in the home menu** since 2026-11-10, like the Question bank drills `drill()` — code kept for tests), `ACC` account map.
+- Old guided cases (`CASES`), the Question bank drills and their engine (`start/step/check/next`, `S` state) were **deleted** on 2026-11-10. Accounts list = `WA` (+ any account used in QBANK lines).
 - Desk engine: `mkCase(q)` makes `mode: 'review'` (approve/reject, ~30–35%) or `'mc'` (4 options: `wrongNums`, `mcEntries`). `deskCase`, `settle`, `approve`, `reject`, `signMC`, `deskEnd`. Economy: +€50 correct, first 2 mistakes free, then −€75, need 60% to pass a day.
 - `TRACKS`: `book` (Bookkeeping Desk, 3 days) → promotion → `fs` (Senior Accountant, 4 days) + `acc` (Financial Audit) + `econ` (Economics Advisory). `kind:'work'` tracks use generated tasks (`JE` templates, `genTB`, `mkTB/mkIS/mkBS/mkCLS`, `WT` UI+grader, `workStart/workCase/workSubmit`). `RULES` = rulebook cards.
 - Typed numbers: inputs are `type=text inputmode=decimal`; always read them with `pn()` (accepts comma decimals and thousands separators). `tolOf(q)` never goes below `TOL_MIN` = ±0.1.
@@ -23,7 +23,7 @@ Single-file pixel-art game (`index.html`, vanilla HTML/CSS/JS, no build) where M
 - Pixel art: procedural portraits (`paint`, seeded), `sfx` WebAudio.
 
 ## Tests (jsdom)
-`npm i && npm test` runs `tests/t2..t6.js` (each prints `SIN ERRORES` on success). They check: question bank, desk flow with perfect/bad play on all days, work generators (debits = credits, TB balances, A = L + E), free mode, pad, BIZ alignment. `tests/t.js` has 2 known rounding failures from the old guided cases (pre-existing, not a regression). jsdom needs stubs for canvas `getContext` and `scrollIntoView`.
+`npm i && npm test` runs `tests/t2..t7.js` (each prints `SIN ERRORES` on success). t2: question-bank integrity (options, answers, balanced entries, ±0.1 tolerance and comma input, BIZ alignment, home menu). t3: desk flow with perfect/bad play on all days + BIZ numbers. t4/t5: work generators (debits = credits, TB balances, A = L + E) and free mode. t6: pad. t7: calculator. jsdom needs stubs for canvas `getContext` and `scrollIntoView`; tests that open the desk must end with `w.close();process.exit(0)` (the clock interval keeps Node alive). No Node on this Mac: install from nodejs.org.
 
 ## Content rules (very important)
 - Questions came from NotebookLM and **must be audited**: recompute arithmetic, drop "wait, let's recalculate" explanations, drop wrong chapter labels and made-up page numbers, keep to chapters in scope. Accounting in scope: Ch.1–6, 8, 9, 10, 12, 14, 15; not 7, 11, 13.
