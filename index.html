@@ -589,7 +589,7 @@ function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor
 function isWeak(q){ const m=store.get().m[q.concept]; return !!m&&m.r/(m.r+m.w)<0.7; }
 function toStep(q){
   const b={story:q.question,concept:q.concept,ref:q.ref,explain:q.explain};
-  if(q.type==='numeric') return {...b,type:'numeric',answer:q.answer,unit:q.unit||'',tol:q.tol??(Number.isInteger(q.answer)?0.5:0.02)};
+  if(q.type==='numeric') return {...b,type:'numeric',answer:q.answer,unit:q.unit||'',tol:tolOf(q)};
   if(q.type==='choice'){ const o=shuffle(q.options.map((t,i)=>({t,c:i===q.answer}))); return {...b,type:'choice',options:o.map(x=>x.t),answer:o.findIndex(x=>x.c)}; }
   return {...b,type:'multientry',lines:q.lines};
 }
@@ -600,7 +600,7 @@ function drill(si,n){
   step();
 }
 const norm=s=>s.toLowerCase().replace(/[—–-]/g,' ').replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();
-function rowHtml(){ return '<tr><td><input type="text" list="accl" style="width:100%"></td><td><input type="number" step="any" style="width:100px"></td><td><input type="number" step="any" style="width:100px"></td></tr>'; }
+function rowHtml(){ return '<tr><td><input type="text" list="accl" style="width:100%"></td><td><input type="text" inputmode="decimal" autocomplete="off" style="width:100px"></td><td><input type="text" inputmode="decimal" autocomplete="off" style="width:100px"></td></tr>'; }
 function addRow(){ $('#rows').insertAdjacentHTML('beforeend',rowHtml()); }
 function accNames(){ return [...new Set([...Object.keys(ACC),...Object.keys(WA),...QBANK.flatMap(q=>(q.lines||[]).map(l=>l.a))])].sort(); }
 
@@ -614,9 +614,9 @@ function step(){
   if(st.showTB) h+=tbTable()+eqPanel();
   if(st.model) h+=`<div id="chart">${chart(st)}</div>`;
   if(st.type==='slider') h+=`<div id="live" class="live"></div><input type="range" id="sl" min="${st.min}" max="${st.max}" step="${st.step}" value="${st.init}" oninput="onSlide(this.value)"><div class="mu" id="slv"></div>`;
-  if(st.type==='numeric') h+=`<p><input type="number" id="num" step="any" placeholder="Your answer" onkeydown="if(event.key==='Enter')check()"> ${st.unit||''}</p>`;
+  if(st.type==='numeric') h+=`<p><input type="text" inputmode="decimal" autocomplete="off" id="num" placeholder="Your answer" onkeydown="if(event.key==='Enter')check()"> ${st.unit||''}</p>`;
   if(st.type==='choice') h+=st.options.map((o,i)=>`<label class="opt"><input type="radio" name="ch" value="${i}"> ${o}</label>`).join('');
-  if(st.type==='entry') h+=`<div class="row" style="justify-content:flex-start;margin-top:10px"><label>Debit <select id="dr">${accOpts()}</select></label><label>Credit <select id="cr">${accOpts()}</select></label><label>Amount € <input type="number" id="amt" style="width:110px"></label></div>`;
+  if(st.type==='entry') h+=`<div class="row" style="justify-content:flex-start;margin-top:10px"><label>Debit <select id="dr">${accOpts()}</select></label><label>Credit <select id="cr">${accOpts()}</select></label><label>Amount € <input type="text" inputmode="decimal" autocomplete="off" id="amt" style="width:110px"></label></div>`;
   if(st.type==='multientry'){ const nr=Math.min(10,Math.max(4,st.lines.length+1));
     h+=`<datalist id="accl">${accNames().map(a=>`<option value="${a}">`).join('')}</datalist><table style="margin-top:10px"><thead><tr><th>Account (pick from the list)</th><th class="n">Debit</th><th class="n">Credit</th></tr></thead><tbody id="rows">${Array.from({length:nr},rowHtml).join('')}</tbody></table><p><button class="sec" onclick="addRow()">+ line</button></p>`; }
   h+=`<div id="fb"></div><p><button id="go" onclick="check()">Check</button> <button id="nx" class="sec" style="display:none" onclick="next()">Next →</button></p></div>`;
@@ -684,17 +684,17 @@ function check(){
   if(st.type==='slider'){ ok=Math.abs(S.val-st.answer)<=st.tol;
     if(st.model.kind==='market'){ const m=st.model, qd=m.a-m.b*S.val, qs=m.c+m.d*S.val;
       extra=qd===qs?'':` At your price: ${qd>qs?'shortage':'surplus'} of ${f(Math.abs(qd-qs))} units.`; } }
-  else if(st.type==='numeric'){ const el=$('#num'); if(el.value===''){valid=false;} else ok=Math.abs(+el.value-st.answer)<=st.tol; }
+  else if(st.type==='numeric'){ const el=$('#num'); if(el.value===''){valid=false;} else ok=Math.abs(pn(el.value)-st.answer)<=Math.max(st.tol,TOL_MIN)+1e-9; }
   else if(st.type==='choice'){ const r=document.querySelector('input[name=ch]:checked'); if(!r) valid=false; else ok=+r.value===st.answer; }
   else if(st.type==='multientry'){
     const got={}, exp={};
     document.querySelectorAll('#rows tr').forEach(tr=>{ const [a,d,c]=tr.querySelectorAll('input'), k=norm(a.value); if(!k) return;
-      if(+d.value>0) got[k+'|D']=(got[k+'|D']||0)+ +d.value; if(+c.value>0) got[k+'|C']=(got[k+'|C']||0)+ +c.value; });
+      if(pn(d.value)>0) got[k+'|D']=(got[k+'|D']||0)+ pn(d.value); if(pn(c.value)>0) got[k+'|C']=(got[k+'|C']||0)+ pn(c.value); });
     st.lines.forEach(l=>{ const k=norm(l.a)+'|'+l.s; exp[k]=(exp[k]||0)+l.v; });
     if(!Object.keys(got).length) valid=false;
     else ok=[...new Set([...Object.keys(got),...Object.keys(exp)])].every(k=>Math.abs((got[k]||0)-(exp[k]||0))<0.5);
   }
-  else if(st.type==='entry'){ const dr=$('#dr').value, cr=$('#cr').value, am=+$('#amt').value;
+  else if(st.type==='entry'){ const dr=$('#dr').value, cr=$('#cr').value, am=pn($('#amt').value);
     if(!dr||!cr||!am) valid=false; else {
       ok=dr===st.dr&&cr===st.cr&&am===st.amt;
       if(!ok&&S.tries===0){ S.tries=1;
@@ -831,7 +831,13 @@ const RULES={
 const CLIENTS=['Orion Services','Vanguard Consulting','Apex Ltd.','Solis Co.','Delta Trading','Nova Corp.','Café Lumen','Brouwerij Hertog','Pixel Studio B.V.','Alpine Gear','Maas Logistics','Kasteel Foods'];
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const chOf=q=>+/Ch\.(\d+)/.exec(q.ref)[1];
-const tolOf=q=>q.tol??(Number.isInteger(q.answer)?0.5:0.02);
+/* Parse a typed number: accepts "16.66", "16,66" (iPad Spanish keyboard), "43,300" / "43.300,5" / "1,234.5", spaces and €/$/% signs. NaN if not a number. */
+function pn(v){ let s=String(v).trim().replace(/[\s€$%]/g,''); if(s==='') return NaN;
+  if(s.includes(',')&&s.includes('.')) s=s.lastIndexOf(',')>s.lastIndexOf('.')?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'');
+  else if(s.includes(',')) s=/^-?\d{1,3}(,\d{3})+$/.test(s)?s.replace(/,/g,''):s.replace(',','.');
+  return +s; }
+/* Typed numeric answers: always accept at least ±0.1 (rounding like 16.66 vs 16.67); +1e-9 absorbs float error. */
+const TOL_MIN=0.1, tolOf=q=>Math.max(q.tol??(Number.isInteger(q.answer)?0.5:0.02),TOL_MIN)+1e-9;
 const fmtV=(q,v)=>(q.unit==='$'||q.unit==='€')?q.unit+f(v):f(v)+(q.unit?' '+q.unit:'');
 
 function careerHome(){
@@ -922,12 +928,12 @@ function pickLine(i){ if(!D.picking) return; D.pick=i; document.querySelectorAll
 function approve(){ if(D.dec) return; const c=D.q[D.i];
   settle(c.ok, c.ok?'Signed off: the client\'s work checks out.':'You signed off wrong work. The client was not right.','A'); }
 function openReject(){ if(D.dec) return; const c=D.q[D.i], q=c.q; let h='';
-  if(q.type==='numeric') h=`<div class="card"><b>Your corrected value:</b> <input type="number" step="any" id="rv"> ${q.unit||''} <button onclick="reject()">Confirm rejection</button></div>`;
+  if(q.type==='numeric') h=`<div class="card"><b>Your corrected value:</b> <input type="text" inputmode="decimal" autocomplete="off" id="rv"> ${q.unit||''} <button onclick="reject()">Confirm rejection</button></div>`;
   else if(q.type==='choice') h=`<div class="card"><b>What is the correct answer?</b>${q.options.map((t,i)=>i===c.claim?'':`<label class="opt"><input type="radio" name="rc" value="${i}"> ${t}</label>`).join('')}<button onclick="reject()">Confirm rejection</button></div>`;
   else { D.picking=true; $('#ft').classList.add('picking'); h=`<div class="card"><b>Click the faulty line in the filing, then confirm.</b> <button id="cf" disabled onclick="reject()">Confirm rejection</button></div>`; }
   $('#rej').innerHTML=h; }
 function reject(){ if(D.dec) return; const c=D.q[D.i], q=c.q; let corr;
-  if(q.type==='numeric'){ const v=$('#rv').value; if(v==='') return; corr=Math.abs(+v-q.answer)<=tolOf(q); }
+  if(q.type==='numeric'){ const v=$('#rv').value; if(v==='') return; corr=Math.abs(pn(v)-q.answer)<=tolOf(q); }
   else if(q.type==='choice'){ const r=document.querySelector('input[name=rc]:checked'); if(!r) return; corr=+r.value===q.answer; }
   else { if(D.pick===null) return; corr=D.pick===c.mut; }
   if(c.ok) return settle(false,'False alarm: the client\'s work was actually right.','R');
@@ -1054,11 +1060,11 @@ function mkTB(kind){ const t=genTB(), w=wcl();
 function mkIS(){ const t=genTB(), w=wcl(); return {kind:'is',...w,text:`Here is my trial balance. Prepare my income statement figures: total revenues, total expenses and net income.`,rows:t.rows,ans:stm(t.rows),concept:'Income statement',ref:'Weygandt Ch.1, 4',why:'Only revenue and expense accounts go on the income statement. Dividends and balance sheet accounts do not. Net income = revenues − expenses.'}; }
 function mkBS(){ const t=genTB(), w=wcl(); return {kind:'bs',...w,text:`Here is my trial balance. I need the figures for my statement of retained earnings and balance sheet.`,rows:t.rows,ans:stm(t.rows),concept:'Balance sheet',ref:'Weygandt Ch.1, 4',why:'Ending retained earnings = beginning RE + net income − dividends. Assets are shown net of accumulated depreciation. Check: assets = liabilities + equity.'}; }
 function mkCLS(){ const w=wcl(), as=shuffle(Object.keys(WA)).slice(0,6); return {kind:'cls',...w,text:`My new bookkeeper is confused. Where does each of these accounts appear in the financial statements?`,accs:as,concept:'Financial statements',ref:'Weygandt Ch.1, 4',why:'Revenues and expenses go to the income statement; dividends to the statement of retained earnings; assets (including contra-assets), liabilities, share capital and retained earnings to the balance sheet.'}; }
-const inp=(id,l)=>`<p><label>${l} € <input type="number" step="any" id="${id}" style="width:130px"></label></p>`;
-const nv=id=>{const e=document.getElementById(id); return e&&e.value!==''?+e.value:null;};
+const inp=(id,l)=>`<p><label>${l} € <input type="text" inputmode="decimal" autocomplete="off" id="${id}" style="width:130px"></label></p>`;
+const nv=id=>{const e=document.getElementById(id); return e&&e.value!==''?pn(e.value):null;};
 const WT={
  je:{ui:t=>`<datalist id="accl">${accNames().map(a=>`<option value="${a}">`).join('')}</datalist><table><thead><tr><th>Account (pick from the list)</th><th class="n">Debit</th><th class="n">Credit</th></tr></thead><tbody id="rows">${Array.from({length:Math.min(6,t.lines.length+2)},()=>rowHtml()).join('')}</tbody></table><button class="sec" onclick="addRow()">+ line</button>`,
-  grade:t=>{ const got={},exp={}; document.querySelectorAll('#rows tr').forEach(tr=>{ const [a,d,c]=tr.querySelectorAll('input'),k=norm(a.value); if(!k) return; if(+d.value>0) got[k+'|D']=(got[k+'|D']||0)+ +d.value; if(+c.value>0) got[k+'|C']=(got[k+'|C']||0)+ +c.value; });
+  grade:t=>{ const got={},exp={}; document.querySelectorAll('#rows tr').forEach(tr=>{ const [a,d,c]=tr.querySelectorAll('input'),k=norm(a.value); if(!k) return; if(pn(d.value)>0) got[k+'|D']=(got[k+'|D']||0)+ pn(d.value); if(pn(c.value)>0) got[k+'|C']=(got[k+'|C']||0)+ pn(c.value); });
     t.lines.forEach(l=>{ const k=norm(l.a)+'|'+l.s; exp[k]=(exp[k]||0)+l.v; }); if(!Object.keys(got).length) return null;
     return {ok:[...new Set([...Object.keys(got),...Object.keys(exp)])].every(k=>Math.abs((got[k]||0)-(exp[k]||0))<0.5)}; },
   ans:t=>entryTbl(t.lines)},
