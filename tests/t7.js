@@ -14,6 +14,7 @@ if(!doc.getElementById('calc'))bad.push('no calc panel');
 if(!doc.getElementById('calc').hidden)bad.push('calc should start hidden');
 w.calcToggle(); if(doc.getElementById('calc').hidden)bad.push('toggle did not open');
 '1','2';['1','2','0','÷','7','='].forEach(k=>w.calcKey(k));
+if(doc.getElementById('ce').textContent!=='120÷7')bad.push('expr order '+doc.getElementById('ce').textContent);
 if(doc.getElementById('cr').textContent!=='17.14285714')bad.push('display '+doc.getElementById('cr').textContent);
 w.calcKey('×');w.calcKey('7');w.calcKey('=');if(doc.getElementById('cr').textContent!=='120')bad.push('Ans chain '+doc.getElementById('cr').textContent);
 w.calcKey('5');if(doc.getElementById('ce').textContent!=='5')bad.push('fresh after = '+doc.getElementById('ce').textContent);

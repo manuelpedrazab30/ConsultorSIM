@@ -128,7 +128,7 @@ canvas.pad{width:100%;height:170px;display:block;background:#fbf7ec repeating-li
 .calc{background:#d8cfae;border:3px solid #14130f;padding:5px;margin-bottom:6px;flex:none}
 .calc[hidden]{display:none}
 .calc .cd{display:flex;align-items:center;gap:8px;background:#b9c7a0;border:3px solid #14130f;padding:2px 8px;margin-bottom:5px;font-family:'VT323','Courier New',monospace;color:#14130f;height:42px;overflow:hidden}.calc .cl1{flex:1;min-width:0}.calc .cm{font-size:14px;line-height:1;color:#4c7a3a;min-height:14px}
-.calc .ce{font-size:17px;line-height:1.1;min-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:rtl;text-align:left}
+.calc .ce{font-size:17px;line-height:1.1;min-height:18px;white-space:nowrap;overflow:hidden;text-align:left}
 .calc .cr{font-size:30px;line-height:1;white-space:nowrap;text-align:right}
 .calc .cr.err{color:#a8352b}
 .calc .ck{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -1492,7 +1492,7 @@ function calcEval(src){
 }
 function calcShow(){
   const e=document.getElementById('ce'), r=document.getElementById('cr'); if(!e||!r) return;
-  e.textContent=CALC.expr||' ';
+  e.textContent=CALC.expr.length>26?'…'+CALC.expr.slice(-25):(CALC.expr||' ');
   let v=CALC.last; if(v===null&&CALC.expr){ const p=calcEval(CALC.expr); v=isFinite(p)?p:null; }
   r.textContent=v===null?(CALC.expr?'…':'0'):calcFmt(v); r.classList.toggle('err',CALC.last!==null&&!isFinite(CALC.last));
 }
