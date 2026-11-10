@@ -1,0 +1,14 @@
+{
+  "name": "Consultor U",
+  "short_name": "Consultor U",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#14130f",
+  "theme_color": "#14130f",
+  "start_url": "./",
+  "scope": "./",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
