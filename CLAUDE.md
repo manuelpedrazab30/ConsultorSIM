@@ -15,6 +15,7 @@ Single-file pixel-art game (`index.html`, vanilla HTML/CSS/JS, no build) where M
 - `CASES` (4 old hand-made guided cases), `ACC` account map.
 - Desk engine: `mkCase(q)` makes `mode: 'review'` (approve/reject, ~30–35%) or `'mc'` (4 options: `wrongNums`, `mcEntries`). `deskCase`, `settle`, `approve`, `reject`, `signMC`, `deskEnd`. Economy: +€50 correct, first 2 mistakes free, then −€75, need 60% to pass a day.
 - `TRACKS`: `book` (Bookkeeping Desk, 3 days) → promotion → `fs` (Senior Accountant, 4 days) + `acc` (Financial Audit) + `econ` (Economics Advisory). `kind:'work'` tracks use generated tasks (`JE` templates, `genTB`, `mkTB/mkIS/mkBS/mkCLS`, `WT` UI+grader, `workStart/workCase/workSubmit`). `RULES` = rulebook cards.
+- Typed numbers: inputs are `type=text inputmode=decimal`; always read them with `pn()` (accepts comma decimals and thousands separators). `tolOf(q)` never goes below `TOL_MIN` = ±0.1.
 - Free mode: `freeSetup/freeStart/freeEnd` (pick chapters, mixed queue, `WKT` bookkeeping topics).
 - Scratch pad: canvas with Pointer Events (pen pressure, palm rejection, eraser, big board), thumbnails of missed cases in reports.
 - Layout: `#app.wide` full width; `#app.fit` fits the viewport without page scroll (>900px). Under 900px it stacks and scrolls.
