@@ -133,7 +133,7 @@ canvas.pad{width:100%;height:170px;display:block;background:#fbf7ec repeating-li
 .calc .cr.err{color:#a8352b}
 .calc .ck{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .calc .ck button{margin:0;padding:0;height:32px;font:700 17px/1 system-ui,-apple-system,sans-serif;box-shadow:0 2px 0 #14130f;border-width:2px;touch-action:manipulation;-webkit-user-select:none;user-select:none}
-.calc .ck .n{background:#efe9d0}.calc .ck .op{background:#55503f;color:#efe9d0}.calc .ck .eq{background:#4c7a3a;color:#fff}.calc .ck .cl{background:#a8352b;color:#fff}.calc .ck .use{background:#d9a441;font-size:14px}
+.calc .ck .n{background:#efe9d0}.calc .ck .op{background:#55503f;color:#efe9d0}.calc .ck .ceq{background:#4c7a3a;color:#fff;font-size:22px}.calc .ck .cl{background:#a8352b;color:#fff}.calc .ck .use{background:#d9a441;font-size:14px}
 </style>
 </head>
 <body>
@@ -1467,7 +1467,7 @@ try{ CALC.open=localStorage.getItem('consultoru_calc')==='1'; }catch(_){}
 const CKEYS=[['7','n'],['8','n'],['9','n'],['÷','op'],['√','op'],['(','op'],[')','op'],
  ['4','n'],['5','n'],['6','n'],['×','op'],['x²','op'],['%','op'],['⌫','op'],
  ['1','n'],['2','n'],['3','n'],['−','op'],['±','op'],['Ans','op'],['C','cl'],
- ['0','n'],['.','n'],['=','eq'],['+','op'],['↳ Use','use',3]];
+ ['0','n'],['.','n'],['=','ceq'],['+','op'],['↳ Use','use',3]];
 function calcHtml(){
   return `<div class="calc" id="calc"${CALC.open?'':' hidden'}><div class="cd"><div class="cl1"><div class="ce" id="ce"></div><div class="cm" id="cmsg"></div></div><div class="cr" id="cr"></div></div>
 <div class="ck">${CKEYS.map(([k,c,sp])=>`<button class="${c}"${sp?` style="grid-column:span ${sp}"`:''} onclick="${c==='use'?'calcUse()':`calcKey('${k}')`}"${c==='use'?' title="Copy the result into the last answer box you tapped"':''}>${k}</button>`).join('')}</div></div>`;
