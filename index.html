@@ -22,20 +22,12 @@ button{font:inherit;background:var(--ac);color:#fff;border:0;border-radius:8px;p
 button.sec{background:transparent;color:var(--tx);border:1px solid var(--bd)}
 button:disabled{opacity:.45;cursor:default}
 input[type=number],input[type=text],select{font:inherit;padding:7px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);max-width:100%}
-input[type=range]{width:100%}
 code{background:var(--bg);border:1px solid var(--bd);border-radius:5px;padding:1px 6px;font-size:14px}
 .bar{height:8px;background:var(--bd);border-radius:5px;overflow:hidden;margin-top:4px}
 .bar i{display:block;height:100%;background:var(--ok)}
-.fb{border-radius:10px;padding:12px 14px;margin-top:12px}
-.fb.ok{background:var(--okbg);border:1px solid var(--ok)}.fb.ko{background:var(--kobg);border:1px solid var(--ko)}
 table{border-collapse:collapse;width:100%;font-size:14px}td,th{border-bottom:1px solid var(--bd);padding:5px 8px;text-align:left}td.n,th.n{text-align:right}
 .opt{display:block;padding:9px 12px;border:1px solid var(--bd);border-radius:8px;margin:6px 0;cursor:pointer}
 .opt:has(input:checked){border-color:var(--ac)}
-.eq{display:flex;gap:8px;flex-wrap:wrap;font-size:14px;margin:8px 0}.eq span{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:4px 10px}
-.live{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:10px 0;font-size:14px}.live div{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:6px 10px}
-.tag{font-size:12px;background:var(--bg);border:1px solid var(--bd);border-radius:20px;padding:1px 9px;color:var(--mu)}
-svg text{fill:var(--mu);font-size:11px}
-
 .hud{display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;background:#1f2937;color:#e5e7eb;border-radius:10px;padding:8px 14px;font-size:14px;margin-bottom:10px}
 .grid2{display:grid;grid-template-columns:3fr 2fr;gap:12px;align-items:start}@media(max-width:700px){.grid2{grid-template-columns:1fr}}
 .paper{background:#fbf7ec;color:#222;border:1px solid #d9d0b8;border-radius:6px;padding:16px;box-shadow:2px 3px 0 rgba(0,0,0,.12)}
@@ -46,12 +38,11 @@ svg text{fill:var(--mu);font-size:11px}
 .fl.sel td{background:#fde68a;color:#222}.fl.bad td{background:#fecaca;color:#222}.picking .fl{cursor:pointer}.picking .fl:hover td{background:#fef3c7;color:#222}
 .rules details{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;margin-bottom:6px;font-size:14px}.rules summary{cursor:pointer;font-weight:600}
 .new{font-size:11px;background:var(--ac);color:#fff;border-radius:10px;padding:0 7px;margin-left:6px}
-
 /* ===== PIXEL THEME ===== */
 :root{--bg:#23221f;--card:#3a3731;--tx:#e8e2cc;--mu:#a79f85;--bd:#14130f;--ac:#d9a441;--ok:#7bc26a;--ko:#e0584a;--okbg:#27381f;--kobg:#3d1f1b}
 body{font-family:'VT323','Courier New',monospace;font-size:21px;line-height:1.25}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(0,0,0,.10) 0 1px,transparent 1px 3px)}
-h1,h2,h3,button,.stamp,.bigstamp,.hud,.plate,.tag,.new,th,.big{font-family:'Press Start 2P','Courier New',monospace}
+h1,h2,h3,button,.stamp,.bigstamp,.hud,.plate,.new,th,.big{font-family:'Press Start 2P','Courier New',monospace}
 h1{font-size:17px;line-height:1.5}h2{font-size:13px;line-height:1.5;color:var(--ac)}h3{font-size:12px;line-height:1.5}
 .mu{font-size:18px}
 .card{border:4px solid #14130f;border-radius:0;box-shadow:4px 4px 0 #0b0b09}
@@ -63,7 +54,7 @@ button small{font-size:9px}
 input[type=number],input[type=text],select{border:3px solid #14130f;border-radius:0;background:#efe9d0;color:#2a2622;font-family:inherit;font-size:20px}
 code{border-radius:0;background:#2b2924;border:2px solid #14130f}
 .bar{height:12px;border:3px solid #14130f;border-radius:0;background:#2b2924}.bar i{background:var(--ok)}
-.fb,.live div,.eq span,.tag,.opt,.stamp{border-radius:0}
+.opt,.stamp{border-radius:0}
 .opt{border:3px solid #14130f;background:#2f2c27}
 .hud{background:#14130f;color:var(--ac);border:4px solid #000;border-radius:0;font-size:10px;line-height:1.6;padding:10px 12px;align-items:center}
 .paper{background-color:#d9d2b6;color:#2a2622;border:4px solid #14130f;border-radius:0;box-shadow:4px 4px 0 #0b0b09;position:relative;background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(0,0,0,.05) 23px 24px)}
@@ -139,116 +130,8 @@ canvas.pad{width:100%;height:170px;display:block;background:#fbf7ec repeating-li
 <body>
 <div id="app"></div>
 <script>
-/* ============ DATOS: cada caso es un JSON; el motor es genérico ============ */
+/* ============ DATA ============ */
 const EXAM = '2026-12-15';
-
-const ACC = { // cuenta -> tipo
-  'Cash':'asset','Accounts Receivable':'asset','Prepaid Rent':'asset','Equipment':'asset','Accumulated Depreciation':'asset',
-  'Accounts Payable':'liability','Salaries Payable':'liability','Share Capital':'equity','Service Revenue':'revenue',
-  'Salaries Expense':'expense','Rent Expense':'expense','Depreciation Expense':'expense'
-};
-
-const CASES = [
-{ id:'econ-cafe', subj:'Economics & Business', title:'Café Maastricht', blurb:'Equilibrium, shocks and taxes', steps:[
-  { type:'slider', model:{kind:'market',a:120,b:4,c:-20,d:6}, min:0,max:30,step:1,init:6, answer:14, tol:0,
-    story:'<b>Café Maastricht</b> hires you. The local coffee market has demand <code>Qd = 120 − 4P</code> and supply <code>Qs = −20 + 6P</code> (P in €). Move the price and watch what happens. <b>Which price clears the market?</b>',
-    concept:'Supply-demand equilibrium', ref:'Acemoglu Ch.4',
-    explain:'Setting 120 − 4P = −20 + 6P gives P = 14 and Q = 64. Below that price there is a shortage (Qd > Qs); above it there is a surplus (Qs > Qd).' },
-  { type:'slider', model:{kind:'market',a:160,b:4,c:-20,d:6}, min:0,max:40,step:1,init:14, answer:18, tol:0,
-    story:'Exchange students arrive: demand rises to <code>Qd = 160 − 4P</code>. Supply is unchanged. <b>Set the new equilibrium price.</b>',
-    concept:'Demand shocks', ref:'Acemoglu Ch.4',
-    explain:'160 − 4P = −20 + 6P gives P = 18, Q = 88. An increase in demand shifts the curve right: both price and quantity rise.' },
-  { type:'numeric', unit:'€', answer:21, tol:0.01, model:{kind:'market',a:160,b:4,c:-20,d:6},
-    story:'The city imposes a <b>€5 per cup tax paid by sellers</b>. Demand stays <code>Qd = 160 − 4P</code> and original supply is <code>Qs = −20 + 6P</code>. <b>What price do consumers pay now?</b> (Hint: sellers keep P − 5, so supply becomes <code>Qs = −20 + 6(P − 5)</code>.)',
-    concept:'Tax incidence', ref:'Acemoglu Ch.10',
-    explain:'160 − 4P = −50 + 6P gives P = 21. Consumers pay 21 (before: 18) and sellers receive 21 − 5 = 16 (before: 18).' },
-  { type:'choice', options:['Consumers (€3 of the €5)','Sellers (€3 of the €5)','Half and half','It depends on who legally pays the tax'], answer:0,
-    story:'From the previous result: the price consumers pay rose from 18 to 21, and the price sellers keep fell from 18 to 16. <b>Who bears the larger share of the tax?</b>',
-    concept:'Tax incidence', ref:'Acemoglu Ch.10',
-    explain:'Consumers bear €3 and sellers €2. The burden falls more on the side that is less responsive to price (here demand, slope 4 vs 6 for supply), and it does NOT depend on who legally pays the tax.' }
-]},
-
-{ id:'econ-brewery', subj:'Economics & Business', title:'The Brewery', blurb:'Monopoly, deadweight loss and game theory', steps:[
-  { type:'slider', model:{kind:'mono',a:100,b:1,mc:10}, min:0,max:100,step:1,init:20, answer:45, tol:0,
-    story:'A craft brewery is the <b>only</b> producer in the market. Inverse demand is <code>P = 100 − Q</code>, constant marginal cost <code>MC = 10</code>. <b>Which quantity maximizes its profit?</b> Watch marginal revenue (MR).',
-    concept:'Monopoly: MR = MC', ref:'Acemoglu Ch.12',
-    explain:'MR = 100 − 2Q. Setting MR = MC = 10 gives Q = 45, P = 55, profit = (55 − 10)·45 = 2,025.' },
-  { type:'numeric', unit:'€', answer:1012.5, tol:1, model:{kind:'mono',a:100,b:1,mc:10},
-    story:'Under perfect competition output would be where P = MC. The monopolist produces Q = 45 at P = 55. <b>What is the deadweight loss of the monopoly?</b>',
-    concept:'Deadweight loss', ref:'Acemoglu Ch.12',
-    explain:'Competition: P = MC = 10 gives Q = 90. DWL = ½ · (55 − 10) · (90 − 45) = 1,012.5.' },
-  { type:'numeric', unit:'€', answer:40, tol:0.5,
-    story:'An identical competitor enters (same MC = 10) and both choose quantities simultaneously (<b>Cournot</b>). Each firm\'s best response is <code>q = (90 − q_rival) / 2</code>. <b>What is the market price in the Cournot equilibrium?</b>',
-    concept:'Cournot oligopoly', ref:'Acemoglu Ch.14',
-    explain:'Symmetric: q = (90 − q)/2 gives q = 30 each, Q = 60, P = 100 − 60 = 40. Each firm earns 30 · 30 = 900.' },
-  { type:'choice', answer:1,
-    options:['Both firms collude (22.5 each)','Both firms defect (30 each)','One colludes and the other defects','There is no Nash equilibrium'],
-    story:'They can collude (22.5 each) or defect. Profits (you, rival):<table><tr><th></th><th>Rival colludes</th><th>Rival defects</th></tr><tr><td>You collude</td><td>1,012.5 ; 1,012.5</td><td>759.4 ; 1,139.1</td></tr><tr><td>You defect</td><td>1,139.1 ; 759.4</td><td>900 ; 900</td></tr></table><b>What is the Nash equilibrium of the one-shot game?</b>',
-    concept:'Nash equilibrium / prisoner\'s dilemma', ref:'Acemoglu Ch.13',
-    explain:'Defecting is a dominant strategy: if the rival colludes, 1,139 > 1,012; if the rival defects, 900 > 759. The outcome (900, 900) is worse for both than collusion (1,012, 1,012). That is the dilemma.' }
-]},
-
-{ id:'acc-startup', subj:'Accounting & Financial Reporting', title:'Pixel Studio B.V.', blurb:'Journal entries, adjustments and the accounting equation', steps:[
-  { type:'entry', dr:'Cash', cr:'Share Capital', amt:30000, story:'<b>Transaction 1.</b> The owners invest €30,000 cash in exchange for shares.', concept:'Transaction analysis', ref:'Weygandt Ch.2', explain:'Cash increases (asset → debit) and contributed capital increases (equity → credit).' },
-  { type:'entry', dr:'Equipment', cr:'Accounts Payable', amt:12000, story:'<b>Transaction 2.</b> Buys equipment for €12,000 on account (pays later).', concept:'Transaction analysis', ref:'Weygandt Ch.2', explain:'The Equipment asset increases (debit) and a debt to the supplier is created (liability → credit).' },
-  { type:'entry', dr:'Prepaid Rent', cr:'Cash', amt:2000, story:'<b>Transaction 3.</b> Pays €2,000 cash for 4 months of rent in advance.', concept:'Transaction analysis', ref:'Weygandt Ch.2', explain:'Paying in advance is not an expense yet: it is an asset (Prepaid Rent) that will be used up over time.' },
-  { type:'entry', dr:'Accounts Receivable', cr:'Service Revenue', amt:9000, story:'<b>Transaction 4.</b> Provides services for €9,000 that customers will pay later.', concept:'Revenue recognition', ref:'Weygandt Ch.2-3', explain:'Revenue is recognized when the service is performed, even if not yet collected (accrual basis): Accounts Receivable up, Service Revenue up.' },
-  { type:'entry', dr:'Cash', cr:'Accounts Receivable', amt:5000, story:'<b>Transaction 5.</b> Collects €5,000 from customers for services already billed.', concept:'Transaction analysis', ref:'Weygandt Ch.2', explain:'One asset is exchanged for another: Cash up, Accounts Receivable down. No new revenue.' },
-  { type:'entry', dr:'Salaries Expense', cr:'Cash', amt:3000, story:'<b>Transaction 6.</b> Pays salaries of €3,000 in cash.', concept:'Transaction analysis', ref:'Weygandt Ch.2', explain:'Salaries expense (debit) and cash outflow (credit).' },
-  { type:'entry', dr:'Accounts Payable', cr:'Cash', amt:4000, story:'<b>Transaction 7.</b> Pays €4,000 of what it owed for the equipment.', concept:'Transaction analysis', ref:'Weygandt Ch.2', explain:'The liability decreases (debit) and cash decreases (credit).' },
-  { type:'entry', dr:'Rent Expense', cr:'Prepaid Rent', amt:500, story:'<b>Adjustment 8.</b> Month-end: 1 month of the prepaid rent has been used (€2,000 / 4 months).', concept:'Adjusting entries (deferrals)', ref:'Weygandt Ch.3', explain:'The Prepaid Rent asset falls by €500 (credit) and Rent Expense is recognized (debit).' },
-  { type:'entry', dr:'Depreciation Expense', cr:'Accumulated Depreciation', amt:200, story:'<b>Adjustment 9.</b> The equipment depreciates €200 per month.', concept:'Depreciation', ref:'Weygandt Ch.3', explain:'Depreciation expense (debit) and the contra-asset Accumulated Depreciation (credit); the equipment account itself is not reduced.' },
-  { type:'entry', dr:'Salaries Expense', cr:'Salaries Payable', amt:600, story:'<b>Adjustment 10.</b> €600 of salaries have been earned by employees but will be paid next month.', concept:'Adjusting entries (accruals)', ref:'Weygandt Ch.3', explain:'Expense incurred but not paid: Salaries Expense (debit) and Salaries Payable (credit).' },
-  { type:'numeric', unit:'€', answer:4700, tol:0.5, showTB:true,
-    story:'With your entries, check the trial balance. <b>What is the month\'s net income (revenues − expenses)?</b>',
-    concept:'Income statement', ref:'Weygandt Ch.1, 3',
-    explain:'Revenue 9,000 − salaries (3,000 + 600) − rent 500 − depreciation 200 = 4,700.' },
-  { type:'numeric', unit:'€', answer:43300, tol:0.5, showTB:true,
-    story:'<b>What are total assets?</b> (Remember that Accumulated Depreciation is subtracted.)',
-    concept:'Accounting equation', ref:'Weygandt Ch.1',
-    explain:'Cash 26,000 + A/R 4,000 + Prepaid 1,500 + Equipment 12,000 − Acc. Dep. 200 = 43,300 = Liabilities 8,600 + Equity 34,700.' }
-]},
-
-{ id:'acc-detective', subj:'Accounting & Financial Reporting', title:'Detective: Alpine Gear', blurb:'Inventory, bad debts and ratios', steps:[
-  { type:'numeric', unit:'€', answer:2800, tol:0.5,
-    story:'A supplier is deciding whether to extend credit to <b>Alpine Gear</b>. You start with its inventory (units of the same product): beginning inventory 100 units × €10; purchase 1: 200 units × €12; purchase 2: 100 units × €14. It sold 250 units. <b>What is cost of goods sold (COGS) under FIFO?</b>',
-    concept:'Inventory: FIFO', ref:'Weygandt Ch.6',
-    explain:'FIFO sells the oldest units first: 100 × 10 + 150 × 12 = 2,800. Ending inventory = 50 × 12 + 100 × 14 = 2,000.' },
-  { type:'numeric', unit:'€', answer:3000, tol:0.5,
-    story:'Same data. <b>What is COGS under the weighted-average cost method?</b>',
-    concept:'Inventory: weighted average', ref:'Weygandt Ch.6',
-    explain:'Cost of goods available = 1,000 + 2,400 + 1,400 = 4,800 for 400 units → €12 per unit. COGS = 250 × 12 = 3,000.' },
-  { type:'choice', options:['FIFO','Weighted average','The same under both','It depends on units sold'], answer:0,
-    story:'With purchase prices rising (10 → 12 → 14): <b>which method reports higher net income?</b>',
-    concept:'Inventory: FIFO', ref:'Weygandt Ch.6',
-    explain:'FIFO gives lower COGS (2,800 vs 3,000) and therefore higher income when prices rise; its ending inventory is also higher.' },
-  { type:'numeric', unit:'€', answer:2500, tol:0.5,
-    story:'Receivables: Accounts Receivable is €80,000. Allowance for Doubtful Accounts has a credit balance of €1,500 before adjustment. Management estimates 5% of receivables will be uncollectible. <b>What is the Bad Debt Expense for the adjusting entry?</b>',
-    concept:'Bad debts (allowance method)', ref:'Weygandt Ch.8',
-    explain:'Required allowance = 5% × 80,000 = 4,000. There is already 1,500, so the adjustment is 4,000 − 1,500 = 2,500.' },
-  { type:'numeric', unit:'€', answer:76000, tol:0.5,
-    story:'<b>What is the net realizable value of the receivables?</b>',
-    concept:'Bad debts (allowance method)', ref:'Weygandt Ch.8',
-    explain:'80,000 − 4,000 (ending allowance) = 76,000.' },
-  { type:'numeric', unit:'', answer:1.5, tol:0.01,
-    story:'Liquidity. Current assets are €90,000 and current liabilities are €60,000. <b>What is the current ratio?</b>',
-    concept:'Liquidity ratios', ref:'Weygandt Ch.15',
-    explain:'Current ratio = current assets / current liabilities = 90,000 / 60,000 = 1.5.' },
-  { type:'numeric', unit:'times', answer:3.16, tol:0.02,
-    story:'Net credit sales are €240,000. Use net AR of €76,000 as the average. <b>What is the receivables turnover?</b>',
-    concept:'Receivables turnover', ref:'Weygandt Ch.15',
-    explain:'240,000 / 76,000 = 3.16 times per year.' },
-  { type:'numeric', unit:'days', answer:115.6, tol:1,
-    story:'<b>What is the average collection period?</b> (365 / turnover)',
-    concept:'Receivables turnover', ref:'Weygandt Ch.15',
-    explain:'365 / 3.158 ≈ 115.6 days.' },
-  { type:'choice', answer:2,
-    options:['Approve without doubt: a current ratio of 1.5 is enough','Reject: there is no positive signal at all','Approve with caution (or a low limit): liquidity is acceptable, but it collects in ~116 days while selling on 30-day terms, which strains its cash and raises the risk of late payment','Nothing can be concluded from ratios'],
-    story:'Alpine Gear sells on credit with 30-day terms and asks your company for 30 days of credit. <b>What do you recommend?</b>',
-    concept:'Ratio interpretation', ref:'Weygandt Ch.15',
-    explain:'Ratios must be read together: liquidity is reasonable, but a ~116-day collection period against 30-day terms is a red flag for its cash flow. Be cautious and set a credit limit.' }
-]}
-];
 
 /* ============ QUESTION BANK (from NotebookLM, audited and corrected) ============ */
 const E='Economics & Business', A='Accounting & Financial Reporting';
@@ -834,14 +717,12 @@ const BIZ=[
 ];
 
 QBANK.forEach((q,i)=>{const b=BIZ[i];q.biz={who:b[0],role:b[1],text:b[2],say:b[3]||''};});
-const SUBJ = [...new Set(QBANK.map(q=>q.subj))];
 
 /* ============ ESTADO Y ALMACENAMIENTO ============ */
 const store = {
   get(){ try{ return JSON.parse(localStorage.getItem('consultoru1'))||{m:{},c:{}}; }catch(e){ return {m:{},c:{}}; } },
   set(v){ try{ localStorage.setItem('consultoru1',JSON.stringify(v)); }catch(e){} }
 };
-let S = {case:null,i:0,score:0,tries:0,bal:{},done:false,missed:[],val:null};
 const $ = s=>document.querySelector(s);
 const f = n => Number.isInteger(n)?n.toLocaleString('en-US'):(Math.round(n*100)/100).toLocaleString('en-US');
 
@@ -850,12 +731,11 @@ const W=on=>{ const a=document.getElementById('app'); if(a){ a.classList.toggle(
 const FIT=()=>{ const a=document.getElementById('app'); if(a) a.classList.add('fit'); };
 function home(){
   W(false);
-  S.case=null; clearInterval(CK);
+  clearInterval(CK);
   const st=store.get();
   const days=Math.max(0,Math.ceil((new Date(EXAM)-new Date())/864e5));
   let h=`<div class="row"><div><h1>Consultor U</h1><div class="mu">Exam Dec 15 · ${days} days left</div></div></div>`;
   h+=careerHome();
-  // "Training cases" (CASES) and "Question bank" drills were removed from the menu (2026-11-10). CASES/start() and drill() stay in the code and the tests.
   const cs=Object.entries(st.m).map(([k,v])=>({k,v,p:v.r/(v.r+v.w)})).sort((a,b)=>a.p-b.p);
   h+=`<h2>What to review</h2>`;
   if(!cs.length) h+=`<div class="card mu">Play a case and your weakest concepts will show up here with the chapter to review.</div>`;
@@ -865,157 +745,13 @@ function home(){
 }
 function resetAll(){ if(confirm('Reset all progress?')){ store.set({m:{},c:{}}); home(); } }
 
-function start(id){
-  S={case:CASES.find(c=>c.id===id),i:0,score:0,tries:0,bal:{},done:false,missed:[],val:null};
-  step();
-}
-
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function isWeak(q){ const m=store.get().m[q.concept]; return !!m&&m.r/(m.r+m.w)<0.7; }
-function toStep(q){
-  const b={story:q.question,concept:q.concept,ref:q.ref,explain:q.explain};
-  if(q.type==='numeric') return {...b,type:'numeric',answer:q.answer,unit:q.unit||'',tol:tolOf(q)};
-  if(q.type==='choice'){ const o=shuffle(q.options.map((t,i)=>({t,c:i===q.answer}))); return {...b,type:'choice',options:o.map(x=>x.t),answer:o.findIndex(x=>x.c)}; }
-  return {...b,type:'multientry',lines:q.lines};
-}
-function drill(si,n){
-  let pool=si<0?QBANK.filter(isWeak):QBANK.filter(q=>q.subj===SUBJ[si]);
-  pool=shuffle(pool); if(n) pool=pool.slice(0,n); if(!pool.length) return;
-  S={case:{id:'drill-'+si,si,n,title:si<0?'Drill: weak spots':'Drill: '+SUBJ[si],steps:pool.map(toStep)},i:0,score:0,tries:0,bal:{},done:false,missed:[],val:null};
-  step();
-}
 const norm=s=>s.toLowerCase().replace(/[—–-]/g,' ').replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();
 function rowHtml(){ return '<tr><td><input type="text" list="accl" style="width:100%"></td><td><input type="text" inputmode="decimal" autocomplete="off" style="width:100px"></td><td><input type="text" inputmode="decimal" autocomplete="off" style="width:100px"></td></tr>'; }
 function addRow(){ $('#rows').insertAdjacentHTML('beforeend',rowHtml()); }
-function accNames(){ return [...new Set([...Object.keys(ACC),...Object.keys(WA),...QBANK.flatMap(q=>(q.lines||[]).map(l=>l.a))])].sort(); }
+function accNames(){ return [...new Set([...Object.keys(WA),...QBANK.flatMap(q=>(q.lines||[]).map(l=>l.a))])].sort(); }
 
-function step(){
-  W(false);
-  const c=S.case, st=c.steps[S.i];
-  S.done=false; S.tries=0; S.val=st.type==='slider'?st.init:null;
-  let h=`<div class="row"><button class="sec" onclick="home()">← Cases</button><span class="mu">${c.title} · step ${S.i+1}/${c.steps.length} · points ${f(S.score)}</span></div>`;
-  h+=`<div class="card"><div style="margin-bottom:8px"><span class="tag">${st.concept}</span></div><div>${st.story}</div>`;
-  if(st.type==='entry') h+=`<div id="eq">${eqPanel()}</div>`;
-  if(st.showTB) h+=tbTable()+eqPanel();
-  if(st.model) h+=`<div id="chart">${chart(st)}</div>`;
-  if(st.type==='slider') h+=`<div id="live" class="live"></div><input type="range" id="sl" min="${st.min}" max="${st.max}" step="${st.step}" value="${st.init}" oninput="onSlide(this.value)"><div class="mu" id="slv"></div>`;
-  if(st.type==='numeric') h+=`<p><input type="text" inputmode="decimal" autocomplete="off" id="num" placeholder="Your answer" onkeydown="if(event.key==='Enter')check()"> ${st.unit||''}</p>`;
-  if(st.type==='choice') h+=st.options.map((o,i)=>`<label class="opt"><input type="radio" name="ch" value="${i}"> ${o}</label>`).join('');
-  if(st.type==='entry') h+=`<div class="row" style="justify-content:flex-start;margin-top:10px"><label>Debit <select id="dr">${accOpts()}</select></label><label>Credit <select id="cr">${accOpts()}</select></label><label>Amount € <input type="text" inputmode="decimal" autocomplete="off" id="amt" style="width:110px"></label></div>`;
-  if(st.type==='multientry'){ const nr=Math.min(10,Math.max(4,st.lines.length+1));
-    h+=`<datalist id="accl">${accNames().map(a=>`<option value="${a}">`).join('')}</datalist><table style="margin-top:10px"><thead><tr><th>Account (pick from the list)</th><th class="n">Debit</th><th class="n">Credit</th></tr></thead><tbody id="rows">${Array.from({length:nr},rowHtml).join('')}</tbody></table><p><button class="sec" onclick="addRow()">+ line</button></p>`; }
-  h+=`<div id="fb"></div><p><button id="go" onclick="check()">Check</button> <button id="nx" class="sec" style="display:none" onclick="next()">Next →</button></p></div>`;
-  $('#app').innerHTML=h;
-  if(st.type==='slider') onSlide(st.init);
-}
-
-function accOpts(){ return `<option value="">—</option>`+Object.keys(ACC).sort().map(a=>`<option>${a}</option>`).join(''); }
-
-function onSlide(v){
-  const st=S.case.steps[S.i]; v=+v; S.val=v; const m=st.model;
-  let cells;
-  if(m.kind==='market'){
-    const qd=Math.max(0,m.a-m.b*v), qs=Math.max(0,m.c+m.d*v), q=Math.min(qd,qs);
-    const gap=qd-qs;
-    cells=[['Price',`€${v}`],['Qd',f(qd)],['Qs',f(qs)],[gap>0?'Shortage':gap<0?'Surplus':'Market clears',f(Math.abs(gap))],['Revenue',`€${f(v*q)}`]];
-  } else {
-    const p=Math.max(0,m.a-m.b*v), tr=p*v, tc=m.mc*v;
-    cells=[['Quantity',f(v)],['Price',`€${f(p)}`],['MR',f(m.a-2*m.b*v)],['MC',f(m.mc)],['Profit',`€${f(tr-tc)}`]];
-  }
-  $('#live').innerHTML=cells.map(([a,b])=>`<div><span class="mu">${a}</span><br><b>${b}</b></div>`).join('');
-  $('#slv').textContent=(m.kind==='market'?'Chosen price: €':'Chosen quantity: ')+v;
-  $('#chart').innerHTML=chart(st,v);
-}
-
-function chart(st,v){
-  const m=st.model,W=440,H=240,L=42,B=26,T=10,R=10;
-  let qmax,pmax,ls;
-  if(m.kind==='market'){ qmax=m.a; pmax=m.a/m.b;
-    ls=[['Demand','#2563eb',[[0,m.a/m.b],[qmax,0]]],['Supply','#dc2626',[[0,-m.c/m.d],[qmax,(qmax-m.c)/m.d]]]];
-  } else { qmax=m.a/m.b; pmax=m.a;
-    ls=[['Demand','#2563eb',[[0,m.a],[qmax,0]]],['MR','#9333ea',[[0,m.a],[qmax/2,0]]],['MC','#dc2626',[[0,m.mc],[qmax,m.mc]]]];
-  }
-  const sx=q=>L+q/qmax*(W-L-R), sy=p=>H-B-p/pmax*(H-B-T);
-  const id='cp'+Math.floor(Math.random()*1e6);
-  let g=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img"><defs><clipPath id="${id}"><rect x="${L}" y="${T}" width="${W-L-R}" height="${H-B-T}"/></clipPath></defs>`;
-  g+=`<line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" stroke="#888"/><line x1="${L}" y1="${T}" x2="${L}" y2="${H-B}" stroke="#888"/>`;
-  g+=`<text x="${W-R-10}" y="${H-8}">Q</text><text x="6" y="${T+8}">P</text>`;
-  ls.forEach(([n,c,[a,b]],k)=>{ g+=`<line clip-path="url(#${id})" x1="${sx(a[0])}" y1="${sy(a[1])}" x2="${sx(b[0])}" y2="${sy(b[1])}" stroke="${c}" stroke-width="2.2"/><text x="${W-R-60}" y="${T+14+k*13}" style="fill:${c}">${n}</text>`; });
-  if(v!==undefined){
-    if(m.kind==='market') g+=`<line clip-path="url(#${id})" x1="${L}" x2="${W-R}" y1="${sy(v)}" y2="${sy(v)}" stroke="#16a34a" stroke-dasharray="5 4" stroke-width="2"/>`;
-    else g+=`<line clip-path="url(#${id})" y1="${T}" y2="${H-B}" x1="${sx(v)}" x2="${sx(v)}" stroke="#16a34a" stroke-dasharray="5 4" stroke-width="2"/>`;
-  }
-  return g+'</svg>';
-}
-
-/* ---- contabilidad ---- */
-function eqVals(){
-  let A=0,Lb=0,E=0;
-  for(const [a,t] of Object.entries(ACC)){ const nd=S.bal[a]||0;
-    if(t==='asset') A+=nd; else if(t==='liability') Lb-=nd; else E-=nd; }
-  return {A,Lb,E};
-}
-function eqPanel(){ const {A,Lb,E}=eqVals(); return `<div class="eq"><span>Assets <b>€${f(A)}</b></span><span>=</span><span>Liabilities <b>€${f(Lb)}</b></span><span>+</span><span>Equity (incl. net income) <b>€${f(E)}</b></span></div>`; }
-function tbTable(){
-  const rows=Object.keys(ACC).filter(a=>S.bal[a]).map(a=>{ const n=S.bal[a]; return `<tr><td>${a} <span class="mu">(${ACC[a]})</span></td><td class="n">${n>0?f(n):''}</td><td class="n">${n<0?f(-n):''}</td></tr>`; }).join('');
-  return `<table style="margin-top:10px"><tr><th>Account</th><th class="n">Debit</th><th class="n">Credit</th></tr>${rows}</table>`;
-}
-function applyEntry(st){ S.bal[st.dr]=(S.bal[st.dr]||0)+st.amt; S.bal[st.cr]=(S.bal[st.cr]||0)-st.amt; }
-
-/* ============ LÓGICA DE RESPUESTA ============ */
-function check(){
-  if(S.done) return;
-  const st=S.case.steps[S.i]; let ok=false, extra='', valid=true;
-  if(st.type==='slider'){ ok=Math.abs(S.val-st.answer)<=st.tol;
-    if(st.model.kind==='market'){ const m=st.model, qd=m.a-m.b*S.val, qs=m.c+m.d*S.val;
-      extra=qd===qs?'':` At your price: ${qd>qs?'shortage':'surplus'} of ${f(Math.abs(qd-qs))} units.`; } }
-  else if(st.type==='numeric'){ const el=$('#num'); if(el.value===''){valid=false;} else ok=Math.abs(pn(el.value)-st.answer)<=Math.max(st.tol,TOL_MIN)+1e-9; }
-  else if(st.type==='choice'){ const r=document.querySelector('input[name=ch]:checked'); if(!r) valid=false; else ok=+r.value===st.answer; }
-  else if(st.type==='multientry'){
-    const got={}, exp={};
-    document.querySelectorAll('#rows tr').forEach(tr=>{ const [a,d,c]=tr.querySelectorAll('input'), k=norm(a.value); if(!k) return;
-      if(pn(d.value)>0) got[k+'|D']=(got[k+'|D']||0)+ pn(d.value); if(pn(c.value)>0) got[k+'|C']=(got[k+'|C']||0)+ pn(c.value); });
-    st.lines.forEach(l=>{ const k=norm(l.a)+'|'+l.s; exp[k]=(exp[k]||0)+l.v; });
-    if(!Object.keys(got).length) valid=false;
-    else ok=[...new Set([...Object.keys(got),...Object.keys(exp)])].every(k=>Math.abs((got[k]||0)-(exp[k]||0))<0.5);
-  }
-  else if(st.type==='entry'){ const dr=$('#dr').value, cr=$('#cr').value, am=pn($('#amt').value);
-    if(!dr||!cr||!am) valid=false; else {
-      ok=dr===st.dr&&cr===st.cr&&am===st.amt;
-      if(!ok&&S.tries===0){ S.tries=1;
-        $('#fb').innerHTML=`<div class="fb ko">Incorrect. Hint: the debit is a(n) <b>${ACC[st.dr]}</b> account; the credit is a(n) <b>${ACC[st.cr]}</b> account. Also check the amount and try again.</div>`; return; } } }
-  if(!valid){ $('#fb').innerHTML=`<div class="fb ko">Complete your answer first.</div>`; return; }
-  finish(st,ok,extra);
-}
-
-function finish(st,ok,extra){
-  S.done=true;
-  const pts=ok?(st.type==='entry'&&S.tries===1?0.5:1):0; S.score+=pts;
-  if(!ok) S.missed.push(st);
-  const d=store.get(); const m=d.m[st.concept]||(d.m[st.concept]={r:0,w:0,ref:st.ref});
-  ok?m.r++:m.w++; store.set(d);
-  if(st.type==='entry') applyEntry(st);
-  let ans='';
-  if(st.type==='entry') ans=`Correct entry: Debit <b>${st.dr}</b> / Credit <b>${st.cr}</b> · €${f(st.amt)}. `;
-  else if(st.type==='numeric') ans=`Answer: <b>${f(st.answer)} ${st.unit||''}</b>. `;
-  else if(st.type==='multientry') ans='Correct entries: '+st.lines.map(l=>`${l.s==='D'?'Dr':'Cr'} <b>${l.a}</b> ${f(l.v)}`).join(' · ')+'. ';
-  else if(st.type==='slider') ans=`Answer: <b>${st.model.kind==='market'?'price ':'quantity '}${st.answer}</b>. `;
-  else ans=`Answer: <b>${st.options[st.answer]}</b>. `;
-  $('#fb').innerHTML=`<div class="fb ${ok?'ok':'ko'}"><b>${ok?'Correct':'Not quite'}${ok&&pts<1?' (with hint, ½ point)':''}.</b> ${ans}${extra}<br>${st.explain}<br><span class="mu">Review: ${st.ref}</span></div>`;
-  if(st.type==='entry'){ $('#eq').innerHTML=eqPanel(); }
-  $('#go').style.display='none'; $('#nx').style.display='';
-  document.querySelectorAll('input,select').forEach(e=>e.disabled=true);
-}
-
-function next(){
-  S.i++;
-  if(S.i<S.case.steps.length) return step();
-  const c=S.case, max=c.steps.length, d=store.get(), prev=d.c[c.id];
-  if(!prev||S.score>prev.best) d.c[c.id]={best:S.score,max};
-  store.set(d);
-  const miss=[...new Map(S.missed.map(s=>[s.concept,s])).values()];
-  $('#app').innerHTML=`<h1>${c.title}: ${f(S.score)}/${max}</h1><div class="card">${miss.length?`<b>To review:</b><ul>${miss.map(s=>`<li>${s.concept} — <span class="mu">${s.ref}</span></li>`).join('')}</ul>`:'No misses. Move on to the next case.'}</div><p><button onclick="${c.si!==undefined?`drill(${c.si},${c.n})`:`start('${c.id}')`}">Replay</button> <button class="sec" onclick="home()">Back</button></p>`;
-}
 
 
 /* ============ PIXEL ART: portraits + sound ============ */
