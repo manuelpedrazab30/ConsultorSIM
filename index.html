@@ -94,7 +94,7 @@ input.flash{outline:4px solid #4c7a3a}
 .opt.good{outline:4px solid #3a8f3a}.opt.badc{outline:4px solid #a8352b}
 .padwrap{margin-top:8px}.padbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}.padbar button{padding:6px 10px;font-size:9px}.padbar .sw{width:28px;height:28px;padding:0;border:3px solid #14130f}
 canvas.pad{width:100%;height:170px;display:block;background:#fbf7ec repeating-linear-gradient(0deg,transparent 0 23px,rgba(0,0,0,.07) 23px 24px);border:2px dashed #8a7f5c;touch-action:none;cursor:crosshair;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
-.padwrap.big{position:fixed;inset:0;z-index:50;background:#d9d2b6;padding:12px;margin:0;display:flex;flex-direction:column}.padwrap.big canvas.pad{flex:1;height:auto}
+.padwrap.big{position:fixed;inset:0;z-index:50;background:#d9d2b6;padding:12px;margin:0;display:flex;flex-direction:column}.padwrap.big canvas.pad{flex:1;height:auto}.padwrap.big .calc{width:100%;max-width:440px}
 .thumbs{display:flex;gap:10px;flex-wrap:wrap}.thumbs figure{margin:0;width:160px}.thumbs img{width:100%;border:2px solid #14130f}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}}
 #app.wide{max-width:none;padding:12px 28px 40px}
@@ -125,17 +125,16 @@ canvas.pad{width:100%;height:170px;display:block;background:#fbf7ec repeating-li
 #app.fit .side canvas.pad{flex:1;min-height:0;height:auto}
 }
 /* ===== Calculator (workspace) ===== */
-.calc{background:#d8cfae;border:4px solid #14130f;box-shadow:4px 4px 0 #0b0b09;padding:6px}
+.calc{background:#d8cfae;border:3px solid #14130f;padding:5px;margin-bottom:6px;flex:none}
 .calc[hidden]{display:none}
-.calc .cd{background:#b9c7a0;border:3px solid #14130f;padding:2px 8px;margin-bottom:6px;text-align:right;font-family:'VT323','Courier New',monospace;color:#14130f;min-height:58px;overflow:hidden}
-.calc .ce{font-size:20px;line-height:1.1;min-height:22px;white-space:nowrap;overflow-x:auto;direction:rtl}
-.calc .cr{font-size:32px;line-height:1.1}
+.calc .cd{background:#b9c7a0;border:3px solid #14130f;padding:2px 8px;margin-bottom:6px;text-align:right;font-family:'VT323','Courier New',monospace;color:#14130f;min-height:46px;overflow:hidden}
+.calc .ce{font-size:17px;line-height:1.1;min-height:18px;white-space:nowrap;overflow-x:auto;direction:rtl}
+.calc .cr{font-size:28px;line-height:1}
 .calc .cr.err{color:#a8352b}
-.calc .ck{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
-.calc .ck button{margin:0;padding:0;height:36px;font-size:10px;box-shadow:0 3px 0 #14130f;border-width:3px;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.calc .ck{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.calc .ck button{margin:0;padding:0;height:32px;font:700 17px/1 system-ui,-apple-system,sans-serif;box-shadow:0 2px 0 #14130f;border-width:2px;touch-action:manipulation;-webkit-user-select:none;user-select:none}
 .calc .ck .n{background:#efe9d0}.calc .ck .op{background:#55503f;color:#efe9d0}.calc .ck .eq{background:#4c7a3a;color:#fff}.calc .ck .cl{background:#a8352b;color:#fff}
-.calc .cu{display:flex;gap:6px;margin-top:6px;align-items:center}.calc .cu button{margin:0;padding:6px 10px;font-size:9px}.calc .cu .mu{font-size:16px;flex:1}
-@media(min-width:901px){#app.fit .side .calc{flex:none}}
+.calc .cu{display:flex;gap:6px;margin-top:5px;align-items:center}.calc .cu button{margin:0;padding:6px 10px;font-size:9px}.calc .cu .mu{font-size:16px;flex:1}
 </style>
 </head>
 <body>
@@ -1217,7 +1216,7 @@ function deskCase(){
   <div class="desktop"><div class="grid2"><div class="main"><div class="paper"><div class="mu">${c.client.toUpperCase()} · ${q.biz.role.toUpperCase()}</div><p class="scene">“${scene(c)}”</p>
    <details class="tech"><summary>Technical brief (exam wording)</summary>${q.question}</details>
    ${mc?`<div class="mu">YOUR RULING</div>${mcHtml(c)}`:`<div class="mu">${q.type==='multientry'?'ENTRY POSTED BY THEIR BOOKKEEPER':q.type==='choice'?'THEIR POSITION':'THEIR PROPOSAL'}</div>${claim}`}</div>
-  <p id="act">${mc?'<button class="appr" onclick="signMC()">✔ SIGN OFF ON SELECTED</button>':'<button class="appr" onclick="approve()">✔ APPROVE</button> <button class="rej" onclick="openReject()">✘ REJECT</button>'}</p><div id="rej"></div><div id="verdict"></div></div><div class="side">${rulesHtml()}${calcHtml()}${padHtml()}</div></div></div>`;
+  <p id="act">${mc?'<button class="appr" onclick="signMC()">✔ SIGN OFF ON SELECTED</button>':'<button class="appr" onclick="approve()">✔ APPROVE</button> <button class="rej" onclick="openReject()">✘ REJECT</button>'}</p><div id="rej"></div><div id="verdict"></div></div><div class="side">${rulesHtml()}${padHtml()}</div></div></div>`;
   drawPortraits(); sfx('bell'); initPad(); calcShow(); FIT(); padSize();
   clearInterval(CK); CK=setInterval(tick,1000); tick();
 }
@@ -1402,7 +1401,7 @@ function workCase(){
   $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>JOB ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
   <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${t.client}"></canvas><div class="counter"><div class="plate">${t.client.toUpperCase()}</div></div></div>
   <div class="desktop"><div class="grid2"><div class="main"><div class="paper"><div class="mu">${t.client.toUpperCase()} · ${t.role.toUpperCase()}</div><p class="scene">“${t.text}”</p>${WT[t.kind].ui(t)}</div>
-  <p id="wact"><button class="appr" onclick="workSubmit()">✔ FILE IT</button></p><div id="verdict"></div></div><div class="side">${rulesHtml()}${calcHtml()}${padHtml()}</div></div></div>`;
+  <p id="wact"><button class="appr" onclick="workSubmit()">✔ FILE IT</button></p><div id="verdict"></div></div><div class="side">${rulesHtml()}${padHtml()}</div></div></div>`;
   drawPortraits(); sfx('bell'); initPad(); calcShow(); FIT(); padSize(); clearInterval(CK); CK=setInterval(tick,1000); tick();
 }
 function workSubmit(){
@@ -1535,7 +1534,7 @@ document.addEventListener('keydown',e=>{
 let PAD=null;
 const INKS=['#1d1a16','#a8352b','#1f4e9c'];
 function padHtml(){
-  return `<div class="padwrap" id="padwrap"><div class="padbar"><button class="sec" onclick="padTool('pen')">✎ Pen</button><button class="sec" onclick="padTool('er')">⌫ Eraser</button>${INKS.map(c=>`<button class="sec sw" style="background:${c}" onclick="padInk('${c}')" aria-label="ink"></button>`).join('')}<button class="sec" onclick="padUndo()">↶ Undo</button><button class="sec" onclick="padClear()">Clear</button><button class="sec" onclick="padBig()" id="padbig">⤢ Big board</button><button class="sec" onclick="calcToggle()" id="calcbtn">${CALC.open?'▾ Calc':'▸ Calc'}</button></div><canvas id="pad" class="pad"></canvas></div>`;
+  return `<div class="padwrap" id="padwrap"><div class="padbar"><button class="sec" onclick="padTool('pen')">✎ Pen</button><button class="sec" onclick="padTool('er')">⌫ Eraser</button>${INKS.map(c=>`<button class="sec sw" style="background:${c}" onclick="padInk('${c}')" aria-label="ink"></button>`).join('')}<button class="sec" onclick="padUndo()">↶ Undo</button><button class="sec" onclick="padClear()">Clear</button><button class="sec" onclick="padBig()" id="padbig">⤢ Big board</button><button class="sec" onclick="calcToggle()" id="calcbtn">${CALC.open?'▾ Calc':'▸ Calc'}</button></div>${calcHtml()}<canvas id="pad" class="pad"></canvas></div>`;
 }
 function initPad(){
   const cv=document.getElementById('pad'); PAD=null; if(!cv) return;
