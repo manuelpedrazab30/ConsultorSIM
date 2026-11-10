@@ -855,20 +855,8 @@ function home(){
   const days=Math.max(0,Math.ceil((new Date(EXAM)-new Date())/864e5));
   let h=`<div class="row"><div><h1>Consultor U</h1><div class="mu">Exam Dec 15 · ${days} days left</div></div></div>`;
   h+=careerHome();
-  h+=`<h2>Training cases</h2>`;
-  for(const subj of [...new Set(CASES.map(c=>c.subj))]){
-    h+=`<h2>${subj}</h2>`;
-    for(const c of CASES.filter(x=>x.subj===subj)){
-      const r=st.c[c.id];
-      h+=`<div class="card row"><div><h3>${c.title}</h3><div class="mu">${c.blurb} · ${c.steps.length} steps${r?` · best: ${f(r.best)}/${r.max}`:''}</div></div><button onclick="start('${c.id}')">${r?'Replay':'Play'}</button></div>`;
-    }
-  }
+  // "Training cases" (CASES) and "Question bank" drills were removed from the menu (2026-11-10). CASES/start() and drill() stay in the code and the tests.
   const cs=Object.entries(st.m).map(([k,v])=>({k,v,p:v.r/(v.r+v.w)})).sort((a,b)=>a.p-b.p);
-  h+=`<h2>Question bank</h2>`;
-  SUBJ.forEach((sj,i)=>{ const n=QBANK.filter(q=>q.subj===sj).length;
-    h+=`<div class="card row"><div><h3>${sj}</h3><div class="mu">${n} exam-style questions</div></div><div><button onclick="drill(${i},10)">Drill 10</button> <button class="sec" onclick="drill(${i},0)">All</button></div></div>`; });
-  const wk=QBANK.filter(isWeak).length;
-  if(wk) h+=`<div class="card row"><div><h3>Weak spots</h3><div class="mu">${wk} questions on concepts you miss</div></div><button onclick="drill(-1,10)">Drill</button></div>`;
   h+=`<h2>What to review</h2>`;
   if(!cs.length) h+=`<div class="card mu">Play a case and your weakest concepts will show up here with the chapter to review.</div>`;
   for(const {k,v,p} of cs) h+=`<div class="card"><div class="row"><b>${k}</b><span class="mu">${v.r} ✓ · ${v.w} ✗ · ${v.ref}</span></div><div class="bar"><i style="width:${Math.round(p*100)}%"></i></div></div>`;
