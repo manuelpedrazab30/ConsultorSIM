@@ -1,4 +1,4 @@
-# Consultor U
+# Consultor UM
 
 Single-file pixel-art game (`index.html`) to study Economics & Business and Accounting & Financial Reporting by playing as a consultant. Exams: 15 Dec.
 

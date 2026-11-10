@@ -1,4 +1,4 @@
-# Consultor U — project guide for Claude Code
+# Consultor UM — project guide for Claude Code
 
 ## What this is
 Single-file pixel-art game (`index.html`, vanilla HTML/CSS/JS, no build) where Manuel (International Business, year 1, Maastricht) studies for his **15 Dec 2026 exams** by playing a consultant/accountant. Subjects: *Economics and Business* (EBC1009, Acemoglu/Laibson/List) and *Accounting and Financial Reporting* (EBC1037-39, Weygandt IFRS 5e).
@@ -11,7 +11,7 @@ Single-file pixel-art game (`index.html`, vanilla HTML/CSS/JS, no build) where M
 ## Architecture (all in `index.html`, in this order)
 - Head: embedded fonts (base64 Press Start 2P, VT323), iPad/PWA meta, inline manifest and icon.
 - State: `localStorage` key `consultoru1` = `{m: mastery by concept, c: best scores, career: {unlocked days per track, promoted}, free: {sel, n}}`.
-- `QBANK` (125 vetted questions: 64 original + batch 1 from `batch1_questions.json`: `numeric` / `choice` / `multientry`) + `BIZ` (same order, one entry each: `[who, role, text, say]`). `text` may contain `¦` splitting a neutral ask from a review-only suffix. Every number in a question must appear in its `BIZ` text (tested).
+- `QBANK` (172 vetted questions: 64 original + batch 1 + batch 2 from `batch1_questions.json` / `batch2_questions.json`: `numeric` / `choice` / `multientry`) + `BIZ` (same order, one entry each: `[who, role, text, say]`). `text` may contain `¦` splitting a neutral ask from a review-only suffix. Every number in a question must appear in its `BIZ` text (tested).
 - Old guided cases (`CASES`), the Question bank drills and their engine (`start/step/check/next`, `S` state) were **deleted** on 2026-11-10. Accounts list = `WA` (+ any account used in QBANK lines).
 - Desk engine: `mkCase(q)` makes `mode: 'review'` (approve/reject, ~30–35%) or `'mc'` (4 options: `wrongNums`, `mcEntries`). `deskCase`, `settle`, `approve`, `reject`, `signMC`, `deskEnd`. Economy: +€50 correct, first 2 mistakes free, then −€75, need 60% to pass a day.
 - `TRACKS`: `book` (Bookkeeping Desk, 3 days) → promotion → `fs` (Senior Accountant, 4 days) + `acc` (Financial Audit) + `econ` (Economics Advisory). `kind:'work'` tracks use generated tasks (`JE` templates, `genTB`, `mkTB/mkIS/mkBS/mkCLS`, `WT` UI+grader, `workStart/workCase/workSubmit`). `RULES` = rulebook cards.
