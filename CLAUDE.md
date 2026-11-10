@@ -11,7 +11,7 @@ Single-file pixel-art game (`index.html`, vanilla HTML/CSS/JS, no build) where M
 ## Architecture (all in `index.html`, in this order)
 - Head: embedded fonts (base64 Press Start 2P, VT323), iPad/PWA meta, inline manifest and icon.
 - State: `localStorage` key `consultoru1` = `{m: mastery by concept, c: best scores, career: {unlocked days per track, promoted}, free: {sel, n}}`.
-- `QBANK` (64 vetted questions: `numeric` / `choice` / `multientry`) + `BIZ` (same order, one entry each: `[who, role, text, say]`). `text` may contain `¦` splitting a neutral ask from a review-only suffix. Every number in a question must appear in its `BIZ` text (tested).
+- `QBANK` (125 vetted questions: 64 original + batch 1 from `batch1_questions.json`: `numeric` / `choice` / `multientry`) + `BIZ` (same order, one entry each: `[who, role, text, say]`). `text` may contain `¦` splitting a neutral ask from a review-only suffix. Every number in a question must appear in its `BIZ` text (tested).
 - `CASES` (4 old hand-made guided cases), `ACC` account map.
 - Desk engine: `mkCase(q)` makes `mode: 'review'` (approve/reject, ~30–35%) or `'mc'` (4 options: `wrongNums`, `mcEntries`). `deskCase`, `settle`, `approve`, `reject`, `signMC`, `deskEnd`. Economy: +€50 correct, first 2 mistakes free, then −€75, need 60% to pass a day.
 - `TRACKS`: `book` (Bookkeeping Desk, 3 days) → promotion → `fs` (Senior Accountant, 4 days) + `acc` (Financial Audit) + `econ` (Economics Advisory). `kind:'work'` tracks use generated tasks (`JE` templates, `genTB`, `mkTB/mkIS/mkBS/mkCLS`, `WT` UI+grader, `workStart/workCase/workSubmit`). `RULES` = rulebook cards.
