@@ -56,6 +56,7 @@ code{border-radius:0;background:#2b2924;border:2px solid #14130f}
 .bar{height:12px;border:3px solid #14130f;border-radius:0;background:#2b2924}.bar i{background:var(--ok)}
 .opt,.stamp{border-radius:0}
 .opt{border:3px solid #14130f;background:#2f2c27}
+.hud .hudx{padding:2px 8px;font-size:9px;margin:0;box-shadow:0 2px 0 #000}
 .hud{background:#14130f;color:var(--ac);border:4px solid #000;border-radius:0;font-size:10px;line-height:1.6;padding:10px 12px;align-items:center}
 .paper{background-color:#d9d2b6;color:#2a2622;border:4px solid #14130f;border-radius:0;box-shadow:4px 4px 0 #0b0b09;position:relative;background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(0,0,0,.05) 23px 24px)}
 .paper .mu{color:#6b6450}.paper td,.paper th{border-color:#b9b194}.paper textarea{border:2px dashed #8f876c;border-radius:0;font-family:inherit;font-size:19px}
@@ -755,8 +756,8 @@ function accNames(){ return [...new Set([...Object.keys(WA),...QBANK.flatMap(q=>
 
 
 /* ============ PIXEL ART: portraits + sound ============ */
-let MUTE=false, AC=null;
-function sfx(k){ if(MUTE) return; try{
+let AC=null;
+function sfx(k){ try{
   AC=AC||new (window.AudioContext||window.webkitAudioContext)(); let at=AC.currentTime;
   const seq={stamp:[[160,.09,'square'],[90,.12,'square']],ok:[[523,.08,'square'],[784,.14,'square']],bad:[[196,.14,'sawtooth'],[130,.22,'sawtooth']],bell:[[880,.1,'triangle'],[1175,.2,'triangle']]}[k];
   seq.forEach(([fr,du,ty])=>{ const o=AC.createOscillator(), g=AC.createGain(); o.type=ty; o.frequency.value=fr; g.gain.setValueAtTime(.07,at); g.gain.exponentialRampToValueAtTime(.001,at+du); o.connect(g); g.connect(AC.destination); o.start(at); o.stop(at+du); at+=du*0.9; });
@@ -934,7 +935,7 @@ function deskCase(){
   if(mc){} else if(q.type==='numeric') claim=say(q.biz.say.replace('{v}','<b>'+f(c.claim)+'</b>'));
   else if(q.type==='choice') claim=say(q.biz.say.replace('{v}','<b>'+q.options[c.claim]+'</b>').replace(/“(?=<b>)/,'“'));
   else if(!mc) claim=`<table id="ft"><tr><th>Account</th><th class="n">Debit</th><th class="n">Credit</th></tr>${c.lines.map((l,i)=>`<tr class="fl" onclick="pickLine(${i})"><td style="padding-left:${l.s==='C'?28:8}px">${l.a}</td><td class="n">${l.s==='D'?f(l.v):''}</td><td class="n">${l.s==='C'?f(l.v):''}</td></tr>`).join('')}</table>`;
-  $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>CASE ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
+  $('#app').innerHTML=`<div class="hud"><button class="sec hudx" onclick="deskQuit()">✕ Exit</button><span>DAY ${D.di+1} · ${D.day.name}</span><span>CASE ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span></div>
   <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${c.client}"></canvas><div class="counter"><div class="plate">${c.client.toUpperCase()}</div></div></div>
   <div class="desktop"><div class="grid2"><div class="main"><div class="paper"><div class="mu">${c.client.toUpperCase()} · ${q.biz.role.toUpperCase()}</div><p class="scene">“${scene(c)}”</p>
    <details class="tech"><summary>Technical brief (exam wording)</summary>${q.question}</details>
@@ -942,6 +943,11 @@ function deskCase(){
   <p id="act">${mc?'<button class="appr" onclick="signMC()">✔ SIGN OFF ON SELECTED</button>':'<button class="appr" onclick="approve()">✔ APPROVE</button> <button class="rej" onclick="openReject()">✘ REJECT</button>'}</p><div id="rej"></div><div id="verdict"></div></div><div class="side">${rulesHtml()}${padHtml()}</div></div></div>`;
   drawPortraits(); sfx('bell'); initPad(); calcShow(); FIT(); padSize();
   clearInterval(CK); CK=setInterval(tick,1000); tick();
+}
+/* Leave a desk/work/free session mid-way: nothing about the day is scored; answers already given still count in "What to review". */
+function deskQuit(){
+  if(!confirm("Leave the office? Today's session won't be scored.")) return;
+  clearInterval(CK); D=null; home();
 }
 function tick(){ const el=$('#clk'); if(!el||!D) return; const s=Math.floor((Date.now()-D.t0)/1000); el.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); el.style.color=s>180?'#f87171':''; }
 function pickLine(i){ if(!D.picking) return; D.pick=i; document.querySelectorAll('.fl').forEach((r,k)=>r.classList.toggle('sel',k===i)); $('#cf').disabled=false; }
@@ -1121,7 +1127,7 @@ function workCase(){
   if(D.i>=D.q.length) return deskEnd();
   if(D.q[D.i].q) return deskCase();
   const t=D.q[D.i]; D.t0=Date.now(); D.dec=false;
-  $('#app').innerHTML=`<div class="hud"><span>DAY ${D.di+1} · ${D.day.name}</span><span>JOB ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span><button class="sec" style="padding:2px 8px;font-size:9px" onclick="MUTE=!MUTE;this.textContent=MUTE?'♪ off':'♪ on'">${MUTE?'♪ off':'♪ on'}</button></div>
+  $('#app').innerHTML=`<div class="hud"><button class="sec hudx" onclick="deskQuit()">✕ Exit</button><span>DAY ${D.di+1} · ${D.day.name}</span><span>JOB ${D.i+1}/${D.q.length}</span><span id="cash">€${D.cash}</span><span id="warn">WARN ${'■'.repeat(D.warn)+'□'.repeat(2-D.warn)}</span><span>⏱ <b id="clk">0:00</b></span></div>
   <div class="booth"><canvas class="pt" id="pt" data-seed="${D.t.key}${D.di}-${D.i}-${t.client}"></canvas><div class="counter"><div class="plate">${t.client.toUpperCase()}</div></div></div>
   <div class="desktop"><div class="grid2"><div class="main"><div class="paper"><div class="mu">${t.client.toUpperCase()} · ${t.role.toUpperCase()}</div><p class="scene">“${t.text}”</p>${WT[t.kind].ui(t)}</div>
   <p id="wact"><button class="appr" onclick="workSubmit()">✔ FILE IT</button></p><div id="verdict"></div></div><div class="side">${rulesHtml()}${padHtml()}</div></div></div>`;

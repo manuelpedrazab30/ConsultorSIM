@@ -22,4 +22,11 @@ w.calcKey('C');w.calcKey('3');w.calcKey('±');eq(w.eval('calcEval(CALC.expr)'),-
 // keyboard
 w.calcKey('C');['4','*','2','Enter'].forEach(k=>doc.dispatchEvent(new w.KeyboardEvent('keydown',{key:k,bubbles:true})));
 if(doc.getElementById('cr').textContent!=='8')bad.push('keyboard '+doc.getElementById('cr').textContent);
+// Exit button: desk and work HUD, cancel keeps you in, confirm goes home; no sound toggle left
+for(const go of [()=>{w.deskStart('econ',0);w.deskCase();},()=>{w.home();w.workStart('book',0);w.workCase();}]){
+  go(); const x=doc.querySelector('.hud .hudx'); if(!x){bad.push('no exit button');continue;}
+  if(/♪/.test(doc.querySelector('.hud').textContent))bad.push('sound button still there');
+  w.confirm=()=>false; x.click(); if(!doc.querySelector('.hud'))bad.push('cancel left the session');
+  w.confirm=()=>true; x.click(); if(doc.querySelector('.hud')||!doc.getElementById('app').innerHTML.includes('Career mode'))bad.push('exit did not go home');
+}
 console.log(bad.length?bad:'SIN ERRORES');w.close();process.exit(0);
